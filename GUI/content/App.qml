@@ -16,6 +16,8 @@ Window {
     title: qsTr("StackLayout Test")
     id: mainWindow
 
+    property var screens: {"cnn":0, "rForest":1, "regression": 2, "ffnn": 3, "transformer":4}
+
     TabBar {
         id: bar
         width: parent.width
@@ -73,7 +75,9 @@ Window {
                 x: 487
                 y: 337
                 text: qsTr("Done")
-                property var screens: {"cnn":0, "rForest":1, "regression": 2, "ffnn": 3, "transformer":4}
+            }
+            Connections {
+                target: Screen02
                 onModelChanged: stackView.currentIndex = screens[modelSelection.selected]
             }
         }
