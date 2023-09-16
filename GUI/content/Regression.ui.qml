@@ -21,18 +21,73 @@ Rectangle {
 
     Rectangle {
         id: backgroundRect
-        color: "grey"
+        color: "#d2716b"
         opacity: 1.0
-        width: 1059
+        width: 1371
         height: 389
-        x: 488
-        y: 338
+        radius: 40
+        x: 322
+        y: 479
+    }
+
+    Image {
+        id: regressionMaintTitle
+        x: 298
+        y: -271
+        width: 1382
+        height: 936
+        source: "Title.png"
+    }
+
+    Image {
+        id: sizeTreePic
+        x: 1355
+        y: 456
+        width: 260
+        height: 165
+        source: "Untitled_Artwork (1).png"
+    }
+
+    Image {
+        id: numTreePic
+        x: 670
+        y: 435
+        width: 337
+        height: 196
+        source: "Untitled_Artwork (2).png"
+    }
+
+    Image {
+        id: reg3
+        x: 1027
+        y: 443
+        width: 293
+        height: 179
+        source: "Untitled_Artwork (3).png"
+    }
+
+    Image {
+        id: reg4
+        x: 680
+        y: 212
+        width: 669
+        height: 403
+        source: "Untitled_Artwork (4).png"
+    }
+
+    Image {
+        id: reg5
+        x: 352
+        y: 456
+        width: 293
+        height: 168
+        source: "Untitled_Artwork.png"
     }
 
     Button {
         id: next
-        x: 920
-        y: 756
+        x: 924
+        y: 904
         width: 157
         height: 88
         text: qsTr("NEXT")
@@ -40,26 +95,17 @@ Rectangle {
         font.pixelSize: 35
 
         background: Rectangle {
-            color: "darkgreen"
+            color: "#d2716b"
             radius: 25
         }
 
         onClicked: isDone = true
     }
 
-    Label {
-        id: sizeTreesTitle
-        x: 1259
-        y: 651
-        text: qsTr("Size of Trees")
-        font.pointSize: 25
-        font.family: "Verdana"
-    }
-
     Slider {
         id: sizeTree
-        x: 1339
-        y: 441
+        x: 1460
+        y: 583
         stepSize: 1
         to: 16
         from: 1
@@ -70,8 +116,8 @@ Rectangle {
 
     Slider {
         id: numTrees
-        x: 853
-        y: 441
+        x: 815
+        y: 581
         orientation: Qt.Vertical
         value: 100
         stepSize: 1
@@ -82,8 +128,8 @@ Rectangle {
 
     Label {
         id: epochsVal
-        x: 585
-        y: 458
+        x: 396
+        y: 644
         height: 21
         color: "#121842"
         text: epochs.value
@@ -91,19 +137,10 @@ Rectangle {
         font.family: "Verdana"
     }
 
-    Label {
-        id: numTreesTitle
-        x: 500
-        y: 355
-        text: qsTr("Number of Epochs")
-        font.family: "Verdana"
-        font.pointSize: 25
-    }
-
     Slider {
         id: iterations
-        x: 1105
-        y: 411
+        x: 1146
+        y: 589
         orientation: Qt.Vertical
         value: 10
         stepSize: 1
@@ -114,8 +151,8 @@ Rectangle {
 
     Slider {
         id: epochs
-        x: 617
-        y: 411
+        x: 469
+        y: 589
         orientation: Qt.Vertical
         value: 10
         stepSize: 1
@@ -126,8 +163,8 @@ Rectangle {
 
     Label {
         id: sizeTreesVal
-        x: 1287
-        y: 458
+        x: 1388
+        y: 649
         width: 87
         height: 24
         color: "#121842"
@@ -137,29 +174,9 @@ Rectangle {
     }
 
     Label {
-        id: title
-        x: 872
-        y: 247
-        color: "#273c30"
-        text: qsTr("Regression")
-        font.family: "Verdana"
-        font.styleName: "Bold"
-        font.pointSize: 35
-    }
-
-    Label {
-        id: numTreesTitle1
-        x: 702
-        y: 651
-        text: qsTr("Number of Trees")
-        font.family: "Verdana"
-        font.pointSize: 25
-    }
-
-    Label {
         id: numTreesVal
-        x: 786
-        y: 458
+        x: 754
+        y: 649
         height: 21
         color: "#121842"
         text: numTrees.value
@@ -168,18 +185,9 @@ Rectangle {
     }
 
     Label {
-        id: numTreesTitle2
-        x: 971
-        y: 355
-        text: qsTr("Number of Iterations")
-        font.family: "Verdana"
-        font.pointSize: 25
-    }
-
-    Label {
         id: iterationsVal
-        x: 1036
-        y: 458
+        x: 1095
+        y: 649
         width: 63
         height: 24
         color: "#121842"
