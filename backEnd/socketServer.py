@@ -1,5 +1,6 @@
 import socket
-import select
+import signal
+import sys
 
 def main():
     # Create a server socket
@@ -14,29 +15,31 @@ def main():
     server_socket.listen(1)
     print(f"Server listening on {server_host}:{server_port}")
 
+    def handle_signal(sig, frame):
+        print(f"Received signal {sig}, closing server...")
+        server_socket.close()
+        sys.exit(0)
+
+    # Register a signal handler for Ctrl+C (SIGINT)
+    signal.signal(signal.SIGINT, handle_signal)  # Ctrl+C
+
     try:
+        # Accept client connections
         client_socket, client_address = server_socket.accept()
         print(f"Connection established with {client_address}")
 
         while True:
-            # Use select to handle the socket in a non-blocking way
-            rlist, _, _ = select.select([client_socket], [], [], 1.0)
+            # Receive data from the client
+            data = client_socket.recv(1024)
 
-            if rlist:
-                # Data is available to read
-                data = client_socket.recv(1024)
+            if not data:
+                break  # Connection closed
 
-                if not data:
-                    break  # Connection closed
+            # Handle the received data here
+            response = b"Received: " + data
 
-                # Print the received data to the Python terminal
-                print(f"Received data: {data.decode()}")
-
-                # Handle the received data here
-                response = b"Received: " + data
-
-                # Send a response back to the client
-                client_socket.send(response)
+            # Send a response back to the client
+            client_socket.send(response)
 
     except KeyboardInterrupt:
         print("Server terminated by user.")
