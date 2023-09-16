@@ -1,4 +1,5 @@
 import QtQuick 2.15
+import QtQuick.Controls
 
 Item {
     id: root
@@ -12,16 +13,16 @@ Item {
     Rectangle {
         id: dropContainer
         color: "blue"
-        width: 300
-        height: 256
+        width: 350
+        height: 300
         x: 0
         y: 400
 
         DropArea {
             id: dragTarget
 
-            width: 128
-            height: 256
+            width: 200
+            height: 300
             keys: [ colorKey ]
 
             anchors.right: parent.right
@@ -49,8 +50,8 @@ Item {
         MouseArea {
             id: startBlockMouseArea
 
-            width: 128
-            height: 128
+            width: 200
+            height: 150
             anchors.centerIn: parent
 
             drag.target: startBlock
@@ -60,8 +61,8 @@ Item {
             Rectangle {
                 id: startBlock
 
-                width: 128
-                height: 128
+                width: 200
+                height: 150
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -71,8 +72,8 @@ Item {
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: startBlockMouseArea.drag.active
-                Drag.hotSpot.x: 64
-                Drag.hotSpot.y: 64
+                Drag.hotSpot.x: 100
+                Drag.hotSpot.y: 75
                 states: State {
                     when: startBlockMouseArea.drag.active
                     AnchorChanges {
@@ -83,11 +84,83 @@ Item {
                         }
                     }
                 }
+
+                Label {
+                    id: startBlockOutSizeLabel
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Output Channels")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: startBlockOutSize
+                    value: 16
+                    from: 4
+                    to: 256
+                    anchors.top: startBlockOutSizeLabel.bottom
+                    anchors.horizontalCenter: startBlockOutSizeLabel.horizontalCenter
+                }
+
+                Label {
+                    id: startBlockDropoutLabel
+                    anchors.left: parent.left
+                    anchors.top: startBlockOutSize.bottom
+                    color: "#273c30"
+                    text: qsTr("Dropout")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+
+                    Slider {
+                        width: 100
+                        id: startBlockDropoutSlider
+                        anchors.left: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        to: 0.99
+                        stepSize: 0.01
+                        value: 0.1
+
+                        Label {
+                            id: startBlockDropoutSliderLabel
+                            anchors.left: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "#273c30"
+                            text: parent.value
+                            font.family: "Verdana"
+                            font.pointSize: 12
+                            anchors.topMargin: 10
+                        }
+                    }
+                }
+
+                Label {
+                    id: startBlockKernelSizeLabel
+                    anchors.top: startBlockDropoutLabel.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Kernel Size")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: startBlockKernelSize
+                    value: 3
+                    from: 1
+                    to: 10
+                    anchors.top: startBlockKernelSizeLabel.bottom
+                    anchors.horizontalCenter: startBlockKernelSizeLabel.horizontalCenter
+                }
+
                 DropArea {
                     id: startBlockDropArea
 
-                    width: 64
-                    height: 64
+                    width: 200
+                    height: 100
                     keys: [ colorKey ]
 
                     anchors.left: parent.right
@@ -129,8 +202,8 @@ Item {
         MouseArea {
             id: middleBlockArea1
 
-            width: 128
-            height: 128
+            width: 200
+            height: 150
             anchors.centerIn: parent
 
             drag.target: middleBlock1
@@ -140,8 +213,8 @@ Item {
             Rectangle {
                 id: middleBlock1
 
-                width: 128
-                height: 128
+                width: 200
+                height: 150
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -151,8 +224,8 @@ Item {
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea1.drag.active
-                Drag.hotSpot.x: 64
-                Drag.hotSpot.y: 64
+                Drag.hotSpot.x: 100
+                Drag.hotSpot.y: 75
                 states: State {
                     when: middleBlockArea1.drag.active
                     AnchorChanges {
@@ -163,11 +236,83 @@ Item {
                         }
                     }
                 }
+
+                Label {
+                    id: middleBlock1OutSizeLabel
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Output Channels")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock1OutSize
+                    value: 16
+                    from: 4
+                    to: 256
+                    anchors.top: middleBlock1OutSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock1OutSizeLabel.horizontalCenter
+                }
+
+                Label {
+                    id: middleBlock1DropoutLabel
+                    anchors.left: parent.left
+                    anchors.top: middleBlock1OutSize.bottom
+                    color: "#273c30"
+                    text: qsTr("Dropout")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+
+                    Slider {
+                        width: 100
+                        id: middleBlock1DropoutSlider
+                        anchors.left: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        to: 0.99
+                        stepSize: 0.01
+                        value: 0.1
+
+                        Label {
+                            id: middleBlock1DropoutSliderLabel
+                            anchors.left: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "#273c30"
+                            text: parent.value
+                            font.family: "Verdana"
+                            font.pointSize: 12
+                            anchors.topMargin: 10
+                        }
+                    }
+                }
+
+                Label {
+                    id: middleBlock1KernelSizeLabel
+                    anchors.top: middleBlock1DropoutLabel.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Kernel Size")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock1KernelSize
+                    value: 3
+                    from: 1
+                    to: 10
+                    anchors.top: middleBlock1KernelSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock1KernelSizeLabel.horizontalCenter
+                }
+
                 DropArea {
                     id: middleBlockDropArea1
 
-                    width: 64
-                    height: 64
+                    width: 200
+                    height: 100
                     keys: [ colorKey ]
 
                     anchors.left: parent.right
@@ -188,8 +333,8 @@ Item {
         MouseArea {
             id: middleBlockArea2
 
-            width: 128
-            height: 128
+            width: 200
+            height: 150
             anchors.centerIn: parent
 
             drag.target: middleBlock2
@@ -199,8 +344,8 @@ Item {
             Rectangle {
                 id: middleBlock2
 
-                width: 128
-                height: 128
+                width: 200
+                height: 150
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -210,8 +355,8 @@ Item {
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea2.drag.active
-                Drag.hotSpot.x: 64
-                Drag.hotSpot.y: 64
+                Drag.hotSpot.x: 100
+                Drag.hotSpot.y: 75
                 states: State {
                     when: middleBlockArea2.drag.active
                     AnchorChanges {
@@ -222,11 +367,83 @@ Item {
                         }
                     }
                 }
+
+                Label {
+                    id: middleBlock2OutSizeLabel
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Output Channels")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock2OutSize
+                    value: 16
+                    from: 4
+                    to: 256
+                    anchors.top: middleBlock2OutSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock2OutSizeLabel.horizontalCenter
+                }
+
+                Label {
+                    id: middleBlock2DropoutLabel
+                    anchors.left: parent.left
+                    anchors.top: middleBlock2OutSize.bottom
+                    color: "#273c30"
+                    text: qsTr("Dropout")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+
+                    Slider {
+                        width: 100
+                        id: middleBlock2DropoutSlider
+                        anchors.left: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        to: 0.99
+                        stepSize: 0.01
+                        value: 0.1
+
+                        Label {
+                            id: middleBlock2DropoutSliderLabel
+                            anchors.left: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "#273c30"
+                            text: parent.value
+                            font.family: "Verdana"
+                            font.pointSize: 12
+                            anchors.topMargin: 10
+                        }
+                    }
+                }
+
+                Label {
+                    id: middleBlock2KernelSizeLabel
+                    anchors.top: middleBlock2DropoutLabel.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Kernel Size")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock2KernelSize
+                    value: 3
+                    from: 1
+                    to: 10
+                    anchors.top: middleBlock2KernelSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock2KernelSizeLabel.horizontalCenter
+                }
+
                 DropArea {
                     id: middleBlockDropArea2
 
-                    width: 64
-                    height: 64
+                    width: 200
+                    height: 100
                     keys: [ colorKey ]
 
                     anchors.left: parent.right
@@ -247,8 +464,8 @@ Item {
         MouseArea {
             id: middleBlockArea3
 
-            width: 128
-            height: 128
+            width: 200
+            height: 150
             anchors.centerIn: parent
 
             drag.target: middleBlock3
@@ -258,8 +475,8 @@ Item {
             Rectangle {
                 id: middleBlock3
 
-                width: 128
-                height: 128
+                width: 200
+                height: 150
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -269,8 +486,8 @@ Item {
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea3.drag.active
-                Drag.hotSpot.x: 64
-                Drag.hotSpot.y: 64
+                Drag.hotSpot.x: 100
+                Drag.hotSpot.y: 75
                 states: State {
                     when: middleBlockArea3.drag.active
                     AnchorChanges {
@@ -281,11 +498,83 @@ Item {
                         }
                     }
                 }
+
+                Label {
+                    id: middleBlock3OutSizeLabel
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Output Channels")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock3OutSize
+                    value: 16
+                    from: 4
+                    to: 256
+                    anchors.top: middleBlock3OutSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock3OutSizeLabel.horizontalCenter
+                }
+
+                Label {
+                    id: middleBlock3DropoutLabel
+                    anchors.left: parent.left
+                    anchors.top: middleBlock3OutSize.bottom
+                    color: "#273c30"
+                    text: qsTr("Dropout")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+
+                    Slider {
+                        width: 100
+                        id: middleBlock3DropoutSlider
+                        anchors.left: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        to: 0.99
+                        stepSize: 0.01
+                        value: 0.1
+
+                        Label {
+                            id: middleBlock3DropoutSliderLabel
+                            anchors.left: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "#273c30"
+                            text: parent.value
+                            font.family: "Verdana"
+                            font.pointSize: 12
+                            anchors.topMargin: 10
+                        }
+                    }
+                }
+
+                Label {
+                    id: middleBlock3KernelSizeLabel
+                    anchors.top: middleBlock3DropoutLabel.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Kernel Size")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock3KernelSize
+                    value: 3
+                    from: 1
+                    to: 10
+                    anchors.top: middleBlock3KernelSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock3KernelSizeLabel.horizontalCenter
+                }
+
                 DropArea {
                     id: middleBlockDropArea3
 
-                    width: 64
-                    height: 64
+                    width: 200
+                    height: 100
                     keys: [ colorKey ]
 
                     anchors.left: parent.right
@@ -306,8 +595,8 @@ Item {
         MouseArea {
             id: middleBlockArea4
 
-            width: 128
-            height: 128
+            width: 200
+            height: 150
             anchors.centerIn: parent
 
             drag.target: middleBlock4
@@ -317,8 +606,8 @@ Item {
             Rectangle {
                 id: middleBlock4
 
-                width: 128
-                height: 128
+                width: 200
+                height: 150
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -328,8 +617,8 @@ Item {
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea4.drag.active
-                Drag.hotSpot.x: 64
-                Drag.hotSpot.y: 64
+                Drag.hotSpot.x: 100
+                Drag.hotSpot.y: 75
                 states: State {
                     when: middleBlockArea4.drag.active
                     AnchorChanges {
@@ -340,11 +629,83 @@ Item {
                         }
                     }
                 }
+
+                Label {
+                    id: middleBlock4OutSizeLabel
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Output Channels")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock4OutSize
+                    value: 16
+                    from: 4
+                    to: 256
+                    anchors.top: middleBlock4OutSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock4OutSizeLabel.horizontalCenter
+                }
+
+                Label {
+                    id: middleBlock4DropoutLabel
+                    anchors.left: parent.left
+                    anchors.top: middleBlock4OutSize.bottom
+                    color: "#273c30"
+                    text: qsTr("Dropout")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+
+                    Slider {
+                        width: 100
+                        id: middleBlock4DropoutSlider
+                        anchors.left: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        to: 0.99
+                        stepSize: 0.01
+                        value: 0.1
+
+                        Label {
+                            id: middleBlock4DropoutSliderLabel
+                            anchors.left: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "#273c30"
+                            text: parent.value
+                            font.family: "Verdana"
+                            font.pointSize: 12
+                            anchors.topMargin: 10
+                        }
+                    }
+                }
+
+                Label {
+                    id: middleBlock4KernelSizeLabel
+                    anchors.top: middleBlock4DropoutLabel.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Kernel Size")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock4KernelSize
+                    value: 3
+                    from: 1
+                    to: 10
+                    anchors.top: middleBlock4KernelSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock4KernelSizeLabel.horizontalCenter
+                }
+
                 DropArea {
                     id: middleBlockDropArea4
 
-                    width: 64
-                    height: 64
+                    width: 200
+                    height: 100
                     keys: [ colorKey ]
 
                     anchors.left: parent.right
@@ -365,8 +726,8 @@ Item {
         MouseArea {
             id: middleBlockArea5
 
-            width: 128
-            height: 128
+            width: 200
+            height: 150
             anchors.centerIn: parent
 
             drag.target: middleBlock5
@@ -376,8 +737,8 @@ Item {
             Rectangle {
                 id: middleBlock5
 
-                width: 128
-                height: 128
+                width: 200
+                height: 150
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -387,8 +748,8 @@ Item {
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea5.drag.active
-                Drag.hotSpot.x: 64
-                Drag.hotSpot.y: 64
+                Drag.hotSpot.x: 100
+                Drag.hotSpot.y: 75
                 states: State {
                     when: middleBlockArea5.drag.active
                     AnchorChanges {
@@ -399,11 +760,83 @@ Item {
                         }
                     }
                 }
+
+                Label {
+                    id: middleBlock5OutSizeLabel
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Output Channels")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock5OutSize
+                    value: 16
+                    from: 4
+                    to: 256
+                    anchors.top: middleBlock5OutSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock5OutSizeLabel.horizontalCenter
+                }
+
+                Label {
+                    id: middleBlock5DropoutLabel
+                    anchors.left: parent.left
+                    anchors.top: middleBlock5OutSize.bottom
+                    color: "#273c30"
+                    text: qsTr("Dropout")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+
+                    Slider {
+                        width: 100
+                        id: middleBlock5DropoutSlider
+                        anchors.left: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        to: 0.99
+                        stepSize: 0.01
+                        value: 0.1
+
+                        Label {
+                            id: middleBlock5DropoutSliderLabel
+                            anchors.left: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "#273c30"
+                            text: parent.value
+                            font.family: "Verdana"
+                            font.pointSize: 12
+                            anchors.topMargin: 10
+                        }
+                    }
+                }
+
+                Label {
+                    id: middleBlock5KernelSizeLabel
+                    anchors.top: middleBlock5DropoutLabel.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Kernel Size")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: middleBlock5KernelSize
+                    value: 3
+                    from: 1
+                    to: 10
+                    anchors.top: middleBlock5KernelSizeLabel.bottom
+                    anchors.horizontalCenter: middleBlock5KernelSizeLabel.horizontalCenter
+                }
+
                 DropArea {
                     id: middleBlockDropArea5
 
-                    width: 64
-                    height: 64
+                    width: 200
+                    height: 100
                     keys: [ colorKey ]
 
                     anchors.left: parent.right
@@ -445,8 +878,8 @@ Item {
         MouseArea {
             id: mouseArea3
 
-            width: 128
-            height: 128
+            width: 200
+            height: 150
             anchors.centerIn: parent
 
             drag.target: tile3
@@ -455,9 +888,8 @@ Item {
 
             Rectangle {
                 id: tile3
-
-                width: 128
-                height: 128
+                width: 200
+                height: 150
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -467,8 +899,8 @@ Item {
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: mouseArea3.drag.active
-                Drag.hotSpot.x: 64
-                Drag.hotSpot.y: 64
+                Drag.hotSpot.x: 200
+                Drag.hotSpot.y: 100
                 states: State {
                     when: mouseArea3.drag.active
                     AnchorChanges {
@@ -478,6 +910,58 @@ Item {
                             horizontalCenter: undefined
                         }
                     }
+                }
+
+                Label {
+                    id: endBlockDropoutLabel
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    color: "#273c30"
+                    text: qsTr("Dropout")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+
+                    Slider {
+                        width: 100
+                        id: endBlockDropoutSlider
+                        anchors.left: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        to: 0.99
+                        stepSize: 0.01
+                        value: 0.1
+
+                        Label {
+                            id: endBlockDropoutSliderLabel
+                            anchors.left: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "#273c30"
+                            text: parent.value
+                            font.family: "Verdana"
+                            font.pointSize: 12
+                            anchors.topMargin: 10
+                        }
+                    }
+                }
+
+                Label {
+                    id: endBlockKernelSizeLabel
+                    anchors.top: endBlockDropoutLabel.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "#273c30"
+                    text: qsTr("Kernel Size")
+                    font.family: "Verdana"
+                    font.pointSize: 12
+                    anchors.topMargin: 10
+                }
+
+                SpinBox {
+                    id: endBlockKernelSize
+                    value: 3
+                    from: 1
+                    to: 10
+                    anchors.top: endBlockKernelSizeLabel.bottom
+                    anchors.horizontalCenter: endBlockKernelSizeLabel.horizontalCenter
                 }
             }
         }
