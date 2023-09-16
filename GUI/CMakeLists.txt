@@ -26,6 +26,7 @@ target_link_libraries(GUIApp PRIVATE
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
+    Qt6::Network
 )
 
 if (BUILD_QDS_COMPONENTS)
