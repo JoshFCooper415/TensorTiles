@@ -8,12 +8,16 @@ class CatBoostRegression:
         self.params = params if params else {
             'iterations': 500,
             'learning_rate': 0.1,
-            'depth': 6
+            'depth': 6,
+            'n_estimators' : 50,
+            'X' : np.random.rand(1000, 10),
+            'y' : 5 * np.random.rand(1000, 10)[:, 0] + np.random.randn(1000)
+
         }
         # Initialize the model
         self.model = CatBoostRegressor(**self.params)
         
-    def prepare_data(self, X, y, test_size=0.2, random_state=None):
+    def prepare_data(self, X, y, test_size=0.2, random_state=0):
         """
         Split the data into training and testing datasets.
         """

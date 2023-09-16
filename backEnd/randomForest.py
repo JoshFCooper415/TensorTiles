@@ -9,12 +9,11 @@ class RandomForestRegression:
         self.params = params if params else {
             'n_estimators': 100,
             'max_depth': None,
-            'random_state': 42
         }
         # Initialize the model
         self.model = RandomForestRegressor(**self.params)
         
-    def prepare_data(self, X, y, test_size=0.2, random_state=None):
+    def prepare_data(self, X, y, test_size=0.2, random_state=0):
         """
         Split the data into training and testing datasets.
         """
