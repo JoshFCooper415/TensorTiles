@@ -19,15 +19,24 @@ Rectangle {
 
     Image {
         id: image
-        x: 357
-        y: 52
-        width: 1361
-        height: 1028
+        x: 89
+        y: 858
+        width: 1780
+        height: 824
         anchors.bottom: parent.bottom
         source: "../asset_imports/randomForestBackground.png"
-        anchors.bottomMargin: 0
+        anchors.bottomMargin: -602
         opacity: 0.5
         fillMode: Image.PreserveAspectFit
+    }
+
+    Image {
+        id: randForTitle
+        x: 542
+        y: -172
+        width: 936
+        height: 662
+        source: "Title.png"
     }
 
     Rectangle {
@@ -39,6 +48,15 @@ Rectangle {
         color: "lightgrey"
         opacity: 0.8
         radius: 40
+    }
+
+    Image {
+        id: numTrees1
+        x: 680
+        y: 212
+        width: 669
+        height: 403
+        source: "Untitled_Artwork (4).png"
     }
 
     Slider {
@@ -107,8 +125,8 @@ Rectangle {
 
     Label {
         id: title
-        x: 772
-        y: 221
+        x: 832
+        y: 271
         color: "#273c30"
         text: qsTr("Random Forest")
         font.family: "Verdana"
