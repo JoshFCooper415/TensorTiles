@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+#include <sstream>
 
 int clientSocket; // Declare a global client socket for connection
 
@@ -112,6 +113,25 @@ void sendMLModelSchema(
     sendValidJSONToServer(validJSONString);
 }
 
+// Function to create and send a ServerCommand JSON
+void sendServerCommand(
+    const std::string& command,
+    const std::string& parameters
+) {
+    std::stringstream commandJson;
+    commandJson << "{";
+    commandJson << "\"command\": \"" << command << "\",";
+    commandJson << "\"parameters\": " << parameters;
+    commandJson << "}";
+
+    std::string validJSONString =
+        "{"
+        "\"schemaType\": \"ServerCommand\","
+        "\"JSON_data\": " + commandJson.str() +
+        "}";
+
+    sendValidJSONToServer(validJSONString);
+}
 
 // Function to configure and send AIConfigurations schema
 void sendAIConfigurationsSchema(
@@ -163,6 +183,7 @@ int main() {
     sendMLModelSchema(64, 128, 3, true, 0.2, 0.001, 100);
     std::vector<std::string> droppedFeatures = {"feature1", "feature2"};
     sendAIConfigurationsSchema("Regression", 0.001, 10, 100, "output", droppedFeatures, "random forest", "data set");
+    sendServerCommand("train_ml_model", "{\"model_type\": \"CNN\", \"epochs\": 10, \"learning_rate\": 0.001}");
 
     return 0;
 }

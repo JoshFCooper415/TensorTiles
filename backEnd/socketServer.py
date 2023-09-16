@@ -1,7 +1,7 @@
 import socket
 import json
 from pydantic import ValidationError
-from schema import MLModel, TrainingModelConfig, AIConfigurations
+from schema import MLModel, TrainingModelConfig, AIConfigurations, ServerCommand
 
 # Variable to track the server's running state
 server_running = True
@@ -36,17 +36,17 @@ def receive_variable_length_json(client_socket):
 
 def get_expected_schema(data) -> type:
     schema_type = data.get("schemaType")
-
     if schema_type == "MLModel":
         return MLModel
     elif schema_type == "TrainingModelConfig":
         return TrainingModelConfig
     elif schema_type == "AIConfigurations":
         return AIConfigurations
+    elif schema_type == "ServerCommand":
+        return ServerCommand
     else:
         raise ValueError(f"Received unrecognized schemaType: {schema_type}")
 
-from pydantic import ValidationError
 
 def validate_and_process_data(data):
     try:
