@@ -14,58 +14,29 @@ Rectangle {
     width: Constants.width
     height: Constants.height
 
-    color: Constants.backgroundColor
 
-    Button {
-        id: button
-        text: qsTr("Press me")
-        anchors.verticalCenter: parent.verticalCenter
-        checkable: true
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        Connections {
-            target: button
-            onClicked: animation.start()
-        }
+    ModelSelection {
+        id: modelSelection
+        width: 432
+        height: 378
+        anchors.left: parent.left
+        anchors.top: parent.top
+        scale: 2
+        anchors.topMargin: 250
+        anchors.leftMargin: 300
     }
 
-    Text {
-        id: label
-        text: qsTr("Hello GUI")
-        anchors.top: button.bottom
-        font.family: Constants.font.family
-        anchors.topMargin: 45
+    Rectangle {
+        id: rectangle1
+        y: 0
+        width: 24
+        height: 1080
+        color: "#ed333b"
         anchors.horizontalCenter: parent.horizontalCenter
-
-        SequentialAnimation {
-            id: animation
-
-            ColorAnimation {
-                id: colorAnimation1
-                target: rectangle
-                property: "color"
-                to: "#2294c6"
-                from: Constants.backgroundColor
-            }
-
-            ColorAnimation {
-                id: colorAnimation2
-                target: rectangle
-                property: "color"
-                to: Constants.backgroundColor
-                from: "#2294c6"
-            }
-        }
     }
     states: [
         State {
             name: "clicked"
-            when: button.checked
-
-            PropertyChanges {
-                target: label
-                text: qsTr("Button Checked")
-            }
         }
     ]
 }
