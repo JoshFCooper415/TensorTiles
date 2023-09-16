@@ -13,7 +13,6 @@ class CatForest:
             'n_estimators' : 50,
         }
         self.create_model()
-        print("TESTING")
         # Initialize the model
     def filter_params(self, valid_params):
         return {k: v for k, v in self.params.items() if k in valid_params}
