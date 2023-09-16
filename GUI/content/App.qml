@@ -10,8 +10,8 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
 Window {
-    width: 640
-    height: 480
+    width: 1920
+    height: 1080
     visible: true
     title: qsTr("StackLayout Test")
     id: mainWindow
@@ -65,17 +65,10 @@ Window {
             right: mainWindow.right
         }
 
-        Rectangle {
+        Screen02 {
             id: chooseModelTab
-            color: "orange"
-            Button {
-                id: okButton1
-                x: 487
-                y: 337
-                text: qsTr("Done")
-                onClicked: stackView.currentIndex = 1
-            }
         }
+
         Rectangle {
             id: builderTab
             color: "#87CEFA"
