@@ -2,7 +2,7 @@ import torch
 import torchvision
 import torchvision.transforms as transforms
 
-class STL10DataLoader:
+class STLDataLoader:
     def __init__(self, root='./data', batch_size=32, num_workers=2):
         self.root = root
         self.batch_size = batch_size
