@@ -64,7 +64,7 @@ Window {
             left: mainWindow.left
             right: mainWindow.right
         }
-
+        // index 0 - choose model
         Rectangle {
             id: chooseModelTab
             color: "orange"
@@ -73,36 +73,21 @@ Window {
                 x: 487
                 y: 337
                 text: qsTr("Done")
-                onClicked: stackView.currentIndex = 1
+                property var screens: {"cnn":0, "rForest":1, "regression": 2, "ffnn": 3, "transformer":4}
+                onModelChanged: stackView.currentIndex = screens[modelSelection.selected]
             }
         }
+        // index 1 - Run Model
         Rectangle {
-            id: builderTab
-            color: "#87CEFA"
-            Text {
-                text: qsTr("Other thing")
-                anchors.centerIn: parent
-            }
-            Button {
-                id: runButton1
-                x: 487
-                y: 337
-                text: qsTr("Run")
-                icon.color: "#ffffff"
-                onClicked: stackView.currentIndex = 2
+            id: runTab
+            color: "orange"
+            Loader {
+                id: chooseModelLoader
+                source: "./Screen02.ui.qml"
+                anchors.fill: parent
             }
         }
-        Rectangle {
-            id: runRab
-            color: "red"
-            Button {
-                id: doneButton1
-                x: 487
-                y: 337
-                text: qsTr("Done")
-                onClicked: stackView.currentIndex = 3
-            }
-        }
+        // index 2 - Inference
         Rectangle {
             id: inferenceTab
             color: "purple"
@@ -114,101 +99,36 @@ Window {
                 onClicked: stackView.currentIndex = 0
             }
         }
+        // index 3 - Random Forest
         Rectangle {
             id: randomForest
-            width: parent.width
-            height: parent.height
-
-            color: Constants.backgroundColor
-
-            Image {
-                id: image
-                x: 697
-                y: 617
-                width: 640
-                height: 317
-                anchors.bottom: parent.bottom
-                source: "../../../../Pictures/Saved Pictures/TensorTiles/RandomForestBackground.jpg"
-                anchors.bottomMargin: 146
-                fillMode: Image.PreserveAspectFit
+            color: "orange"
+            Loader {
+                id: randomForestLoader
+                source: "./RandomForest.ui.qml"
+                anchors.fill: parent
             }
-
-            Slider {
-                id: sizeTree
-                x: 1161
-                y: 391
-                stepSize: 1
-                to: 16
-                from: 1
-                snapMode: RangeSlider.SnapOnRelease
-                orientation: Qt.Vertical
-                value: 0.5
-            }
-
-            Slider {
-                id: numTrees
-                x: 781
-                y: 391
-                orientation: Qt.Vertical
-                value: 100
-                stepSize: 1
-                snapMode: RangeSlider.SnapOnRelease
-                to: 5000
-                from: 1
-            }
-
-            Label {
-                id: numTreesVal
-                x: 702
-                y: 442
-                height: 21
-                color: "#121842"
-                text: numTrees.value
-                font.pointSize: 14
-                font.family: "Verdana"
-            }
-
-            Label {
-                id: numTreesTitle
-                x: 645
-                y: 338
-                text: qsTr("Number of Trees")
-                font.family: "Verdana"
-                font.pointSize: 25
-            }
-
-            Label {
-                id: sizeTreesTitle
-                x: 1074
-                y: 338
-                text: qsTr("Size of Trees")
-                font.pointSize: 25
-                font.family: "Verdana"
-            }
-
-            Label {
-                id: sizeTreesVal
-                x: 1119
-                y: 440
-                color: "#121842"
-                text: sizeTree.value
-                font.pointSize: 14
-                font.family: "Verdana"
-            }
-
-            Label {
-                id: title
-                x: 806
-                y: 225
-                color: "#273c30"
-                text: qsTr("Random Forest")
-                font.family: "Verdana"
-                font.styleName: "Bold"
-                font.pointSize: 35
-            }
-
         }
-
+        //index 4 - CNN
+        Rectangle {
+            id: convNet
+            color: "orange"
+            Loader {
+                id: convNetLoader
+                source: "./DragNDropCNN.ui.qml"
+                anchors.fill: parent
+            }
+        }
+        // index 5 - Regression
+        Rectangle {
+            id: regression
+            color: "orange"
+            Loader {
+                id: regressionLoader
+                source: "./Regression.ui.qml"
+                anchors.fill: parent
+            }
+        }
     }
 }
 
