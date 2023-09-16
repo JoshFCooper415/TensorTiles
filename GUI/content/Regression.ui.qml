@@ -11,28 +11,55 @@ import QtQuick.Controls 6.2
 import GUI
 
 Rectangle {
+    property bool isDone: false
+
     id: rectangle
     width: Constants.width
     height: Constants.height
 
     color: Constants.backgroundColor
 
-    Image {
-        id: image
-        x: 697
-        y: 617
-        width: 640
-        height: 317
-        anchors.bottom: parent.bottom
-        source: "../../../../Pictures/Saved Pictures/TensorTiles/RandomForestBackground.jpg"
-        anchors.bottomMargin: 146
-        fillMode: Image.PreserveAspectFit
+    Rectangle {
+        id: backgroundRect
+        color: "grey"
+        opacity: 1.0
+        width: 1059
+        height: 389
+        x: 488
+        y: 338
+    }
+
+    Button {
+        id: next
+        x: 920
+        y: 756
+        width: 157
+        height: 88
+        text: qsTr("NEXT")
+        icon.color: "white"
+        font.pixelSize: 35
+
+        background: Rectangle {
+            color: "darkgreen"
+            radius: 25
+        }
+
+        onClicked: isDone = true
+    }
+
+    Label {
+        id: sizeTreesTitle
+        x: 1259
+        y: 651
+        text: qsTr("Size of Trees")
+        font.pointSize: 25
+        font.family: "Verdana"
     }
 
     Slider {
         id: sizeTree
-        x: 1161
-        y: 391
+        x: 1339
+        y: 441
         stepSize: 1
         to: 16
         from: 1
@@ -43,8 +70,8 @@ Rectangle {
 
     Slider {
         id: numTrees
-        x: 781
-        y: 391
+        x: 853
+        y: 441
         orientation: Qt.Vertical
         value: 100
         stepSize: 1
@@ -54,38 +81,55 @@ Rectangle {
     }
 
     Label {
-        id: numTreesVal
-        x: 702
-        y: 442
+        id: epochsVal
+        x: 585
+        y: 458
         height: 21
         color: "#121842"
-        text: numTrees.value
+        text: epochs.value
         font.pointSize: 14
         font.family: "Verdana"
     }
 
     Label {
         id: numTreesTitle
-        x: 645
-        y: 338
-        text: qsTr("Number of Trees")
+        x: 500
+        y: 355
+        text: qsTr("Number of Epochs")
         font.family: "Verdana"
         font.pointSize: 25
     }
 
-    Label {
-        id: sizeTreesTitle
-        x: 1074
-        y: 338
-        text: qsTr("Size of Trees")
-        font.pointSize: 25
-        font.family: "Verdana"
+    Slider {
+        id: iterations
+        x: 1105
+        y: 411
+        orientation: Qt.Vertical
+        value: 10
+        stepSize: 1
+        snapMode: RangeSlider.SnapOnRelease
+        to: 100
+        from: 1
+    }
+
+    Slider {
+        id: epochs
+        x: 617
+        y: 411
+        orientation: Qt.Vertical
+        value: 10
+        stepSize: 1
+        snapMode: RangeSlider.SnapOnRelease
+        to: 100
+        from: 1
     }
 
     Label {
         id: sizeTreesVal
-        x: 1119
-        y: 440
+        x: 1287
+        y: 458
+        width: 87
+        height: 24
         color: "#121842"
         text: sizeTree.value
         font.pointSize: 14
@@ -94,21 +138,54 @@ Rectangle {
 
     Label {
         id: title
-        x: 806
-        y: 225
+        x: 872
+        y: 247
         color: "#273c30"
-        text: qsTr("Random Forest")
+        text: qsTr("Regression")
         font.family: "Verdana"
         font.styleName: "Bold"
         font.pointSize: 35
     }
 
-    RunButton {
-        id: runButton
-        x: 1297
-        y: 835
-        width: 1434
-        height: 844
+    Label {
+        id: numTreesTitle1
+        x: 702
+        y: 651
+        text: qsTr("Number of Trees")
+        font.family: "Verdana"
+        font.pointSize: 25
+    }
+
+    Label {
+        id: numTreesVal
+        x: 786
+        y: 458
+        height: 21
+        color: "#121842"
+        text: numTrees.value
+        font.family: "Verdana"
+        font.pointSize: 14
+    }
+
+    Label {
+        id: numTreesTitle2
+        x: 971
+        y: 355
+        text: qsTr("Number of Iterations")
+        font.family: "Verdana"
+        font.pointSize: 25
+    }
+
+    Label {
+        id: iterationsVal
+        x: 1036
+        y: 458
+        width: 63
+        height: 24
+        color: "#121842"
+        text: iterations.value
+        font.family: "Verdana"
+        font.pointSize: 14
     }
     states: [
         State {

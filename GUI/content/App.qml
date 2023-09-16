@@ -86,14 +86,8 @@ Window {
             modelData: 0
         }
         // index 3 - Regression
-        Rectangle {
+        Regression {
             id: regression
-            color: "orange"
-            Loader {
-                id: regressionLoader
-                source: "./Regression.ui.qml"
-                anchors.fill: parent
-            }
         }
 
         Rectangle {
