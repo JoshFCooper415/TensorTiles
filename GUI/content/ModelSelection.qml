@@ -6,6 +6,9 @@ Grid {
     width: 450
     height: 400
 
+//    signal selectedChanged(string selection)
+    property string selected: "cnn";
+
     Label {
         id: modelSelectLabel
         width: 450
@@ -27,6 +30,11 @@ Grid {
         checked: true
         anchors.horizontalCenter: modelSelectLabel.horizontalCenter
         anchors.topMargin: 10
+
+        Connections {
+            target: cnnSelected
+            onClicked: selected = "cnn"
+        }
     }
 
     RadioButton {
@@ -36,6 +44,11 @@ Grid {
         text: qsTr("Random Forest")
         anchors.top: cnnSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: randomForestSelected
+            onClicked: selected = "rForest"
+        }
     }
 
     RadioButton {
@@ -45,6 +58,11 @@ Grid {
         text: qsTr("Transformer")
         anchors.top: randomForestSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: transformerSelected
+            onClicked: selected = "transformer"
+        }
     }
 
     RadioButton {
@@ -54,6 +72,11 @@ Grid {
         text: qsTr("Regression")
         anchors.top: transformerSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: regressionSelected
+            onClicked: selected = "regression"
+        }
     }
 
     RadioButton {
@@ -63,5 +86,10 @@ Grid {
         text: qsTr("Feed Forward Neural Network (FFNN)")
         anchors.top: regressionSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: ffnnSelected
+            onClicked: selected = "ffnn"
+        }
     }
 }

@@ -11,8 +11,16 @@ Window {
     visible: true
     title: "GUI"
 
-    Screen01 {
+    Screen02 {
         id: mainScreen
+    }
+
+
+    Screen01 {
+        id: screen01
+        x: 0
+        y: 0
+        visible: false
     }
 
 }

@@ -1,19 +1,17 @@
-
-
-/*
-This is a UI file (.ui.qml) that is intended to be edited in Qt Design Studio only.
-It is supposed to be strictly declarative and only uses a subset of QML. If you edit
-this file manually, you might introduce QML code that is not supported by Qt Design Studio.
-Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on .ui.qml files.
-*/
 import QtQuick 6.2
 import QtQuick.Controls 6.2
 import GUI
+import ModelDatasetSelectionBackend
 
 Rectangle {
     id: rectangle
     width: Constants.width
     height: Constants.height
+    property bool pressed: false
+
+    ModelDatasetSelectionBackend {
+        id: backend
+    }
 
     Rectangle {
         id: rectangle1
@@ -66,10 +64,12 @@ Rectangle {
         checkable: false
         anchors.bottomMargin: 25
         anchors.rightMargin: 25
-    }
-    states: [
-        State {
-            name: "clicked"
+
+        Connections {
+            target: button
+            onClicked: {
+                backend.doStuff(modelSelection.selected)
+            }
         }
-    ]
+    }
 }
