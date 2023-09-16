@@ -10,8 +10,8 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
 Window {
-    width: 640
-    height: 480
+    width: 1920
+    height: 1080
     visible: true
     title: qsTr("StackLayout Test")
     id: mainWindow
@@ -66,22 +66,30 @@ Window {
             left: mainWindow.left
             right: mainWindow.right
         }
-        // index 0 - choose model
-        Rectangle {
+
+        Screen02 {
             id: chooseModelTab
-            color: "orange"
-            Button {
-                id: okButton1
-                x: 487
-                y: 337
-                text: qsTr("Done")
-            }
             Connections {
                 target: Screen02
                 onModelChanged: stackView.currentIndex = screens[modelSelection.selected]
             }
         }
-        // index 1 - Run Model
+        Rectangle {
+            id: builderTab
+            color: "#87CEFA"
+            Text {
+                text: qsTr("Other thing")
+                anchors.centerIn: parent
+            }
+            Button {
+                id: runButton1
+                x: 487
+                y: 337
+                text: qsTr("Run")
+                icon.color: "#ffffff"
+                onClicked: stackView.currentIndex = 2
+            }
+        }
         Rectangle {
             id: runTab
             color: "orange"
@@ -114,14 +122,10 @@ Window {
             }
         }
         //index 4 - CNN
-        Rectangle {
+        DragNDropCNN {
             id: convNet
-            color: "orange"
-            Loader {
-                id: convNetLoader
-                source: "./DragNDropCNN.ui.qml"
-                anchors.fill: parent
-            }
+            colorKey: "orange"
+            modelData: 0
         }
         // index 5 - Regression
         Rectangle {

@@ -1,3 +1,5 @@
-import QtQuick 6.2
+import QtQuick 2.15
 
-Item {}
+Item {
+
+}
