@@ -24,10 +24,5 @@ Item {
             border.width: 5
             radius: 10
         }
-
-        onClicked: {
-            runButton.color = "grey"
-        }
-
     }
 }
