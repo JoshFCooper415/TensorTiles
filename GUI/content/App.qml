@@ -8,6 +8,7 @@ import GUI
 import QtQuick.Window 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
+import AppBackend
 
 Window {
     width: 1920
@@ -93,7 +94,11 @@ Window {
 
             Connections {
                 target: convNet
-                onIsDoneChanged: stackView.currentIndex = 4
+                onIsDoneChanged: {
+                    backend.doStuff(convNet.array.join(";"))
+//                    console.log(convNet.array.join(";"))
+                    stackView.currentIndex = 4
+                }
             }
         }
         // index 3 - Regression
@@ -116,6 +121,10 @@ Window {
                 text: qsTr("Restart")
                 onClicked: stackView.currentIndex = 0
             }
+        }
+
+        AppBackend {
+            id: backend
         }
     }
 }

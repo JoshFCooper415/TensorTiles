@@ -187,18 +187,4 @@ Rectangle {
         font.family: "Verdana"
         font.pointSize: 14
     }
-    states: [
-        State {
-            name: "clicked"
-            when: runButtonRandomForest.clicked
-        }
-    ]
-
-    transitions: [
-        Transition {
-            from: ""
-            to: "clicked"
-            reversible: true
-        }
-    ]
 }

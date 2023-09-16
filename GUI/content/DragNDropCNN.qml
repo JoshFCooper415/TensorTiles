@@ -7,7 +7,7 @@ Item {
     required property string colorKey
     required property int modelData
     property bool isDone: false;
-    property var array: [[]];
+    property var array: [];
 
     width: 1920
     height: 1080
@@ -1009,13 +1009,13 @@ Item {
         }
 
         onClicked: {
-            array = getAllData()
+            getAllData()
             root.isDone = true
         }
     }
 
     function getAllData() {
-        array = [[null, endBlockKernelSize.value, endBlockDropoutSlider.value]]
+        array = [[startBlockOutSize.value, startBlockKernelSize.value, startBlockDropoutSlider.value]]
         if (middleBlockArea5.parent != middleBlockContainer) {
             array.push([middleBlock5OutSize.value, middleBlock5KernelSize.value, middleBlock5DropoutSlider.value]);
         }
@@ -1031,8 +1031,6 @@ Item {
         if (middleBlockArea1.parent != middleBlockContainer) {
             array.push([middleBlock1OutSize.value, middleBlock1KernelSize.value, middleBlock1DropoutSlider.value]);
         }
-        array.push([startBlockOutSize.value, startBlockKernelSize.value, startBlockDropoutSlider.value])
-
-        console.log(array)
+        array.push([[-1, endBlockKernelSize.value, endBlockDropoutSlider.value]])
     }
 }

@@ -102,19 +102,4 @@ Rectangle {
         font.styleName: "Bold"
         font.pointSize: 35
     }
-
-    states: [
-        State {
-            name: "clicked"
-            when: runButtonRandomForest.clicked
-        }
-    ]
-
-    transitions: [
-        Transition {
-            from: ""
-            to: "clicked"
-            reversible: true
-        }
-    ]
 }
