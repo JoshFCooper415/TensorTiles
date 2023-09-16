@@ -69,22 +69,12 @@ Window {
             id: chooseModelTab
         }
 
-        Rectangle {
-            id: builderTab
-            color: "#87CEFA"
-            Text {
-                text: qsTr("Other thing")
-                anchors.centerIn: parent
-            }
-            Button {
-                id: runButton1
-                x: 487
-                y: 337
-                text: qsTr("Run")
-                icon.color: "#ffffff"
-                onClicked: stackView.currentIndex = 2
-            }
+        DragNDropCNN {
+            id: buildTab
+            colorKey: "orange"
+            modelData: 0
         }
+
         Rectangle {
             id: runRab
             color: "red"
