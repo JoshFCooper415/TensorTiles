@@ -29,10 +29,10 @@ input_tensor = torch.randn(8, 1, 32, 32)  # Batch size of 8, 1 channel, 32x32 im
 output_tensor = conv_net_layers(input_tensor)
 print(output_tensor.shape)  # Should print torch.Size([8, 128, 4, 4]), assuming input is 32x32 and it's downsampled to 4x4
 model = ConvNetLayers()
-optimizer = optim.SGD(model.parameters(), lr=hyper_paramaters.learning_rate)
+optimizer = optim.SGD(model.parameters(), lr=hyper_paramaters.get("learning_rate"))
 
 # Training Loop
-for epoch in range(hyper_paramaters.num_epochs):
+for epoch in range(hyper_paramaters.get("num_epochs")):
     for batch_idx, (data, target) in enumerate(train_loader):
         
         # Zero the gradients
@@ -51,7 +51,7 @@ for epoch in range(hyper_paramaters.num_epochs):
         optimizer.step()
         
         if batch_idx % 5 == 0:
-            print(f"Epoch [{epoch+1}/{hyper_paramaters.num_epochs}], Step [{batch_idx}/{len(train_loader)}], Loss: {loss.item():.4f}")
+            print(f"Epoch [{epoch+1}/{hyper_paramaters.get('num_epochs')}], Step [{batch_idx}/{len(train_loader)}], Loss: {loss.item():.4f}")
     for batch_idx, (data, target) in enumerate(test_loader):
         
         # Zero the gradients
@@ -70,7 +70,7 @@ for epoch in range(hyper_paramaters.num_epochs):
         optimizer.step()
         
         if batch_idx % 5 == 0:
-            print(f"Epoch [{epoch+1}/{hyper_paramaters.num_epochs}], Step [{batch_idx}/{len(test_loader)}], Loss: {loss.item():.4f}")
+            print(f"Epoch [{epoch+1}/{hyper_paramaters.get('num_epochs')}], Step [{batch_idx}/{len(test_loader)}], Loss: {loss.item():.4f}")
 # Create synthetic data
 #X = np.random.rand(1000, 10)  # 1000 samples, 10 features
 #y = 5 * X[:, 0] + 3 * X[:, 1] + np.random.randn(1000)  # Synthetic target
