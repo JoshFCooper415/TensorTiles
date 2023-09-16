@@ -32,5 +32,3 @@ class CIFAR10DataLoader:
     
     def get_classes(self):
         return self.classes
-
-# Initialize and access data

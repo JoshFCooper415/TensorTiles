@@ -1,7 +1,8 @@
 import torch.nn.functional as F
 import torch.optim as optim
-from backEnd.ConvNet import ConvNetLayers
+from ConvNet import ConvNetLayers
 from CIFAR10DataLoader import CIFAR10DataLoader
+from MNISTDataLoader import MNISTDataLoader
 
 class CNNTrainer:
     def __init__(self, layer_specs, hyper_parameters, dataset):
@@ -14,7 +15,12 @@ class CNNTrainer:
             self.train_loader = self.cifar_data.get_trainloader()
             self.test_loader = self.cifar_data.get_testloader()
             self.classes = self.cifar_data.get_classes()
-    
+        if dataset == "MNIST":
+            self.mnist_data = MNISTDataLoader()
+            self.train_loader = self.mnist_data.get_trainloader()
+            self.test_loader = self.mnist_data.get_testloader()
+            self.classes = self.mnist_data.get_classes()
+
     def train(self):
         for epoch in range(self.hyper_parameters.get("num_epochs")):
             for batch_idx, (data, target) in enumerate(self.train_loader):
@@ -46,35 +52,3 @@ if __name__ == "__main__":
 
     cnn_trainer = CNNTrainer(layer_specs, hyper_parameters, "CIFAR10")
     cnn_trainer.train()
-
-
-# Initialize and train the model
-#catboost_regressor = CatBoostRegression()
-#catboost_regressor.prepare_data(X, y, test_size=0.2)
-#catboost_regressor.train(verbose=50)
-
-# Make a prediction
-#some_data = np.random.rand(5, 10)
-#predictions = catboost_regressor.predict(some_data)
-#print(f"Predictions: {predictions}")
-
-# Evaluate the model
-#metrics = catboost_regressor.evaluate()
-#print(f"Evaluation metrics: {metrics}")
-# Create synthetic data
-#X = np.random.rand(1000, 10)  # 1000 samples, 10 features
-#y = 5 * X[:, 0] + 3 * X[:, 1] + np.random.randn(1000)  # Synthetic target
-
-# Initialize and train the model
-#catboost_regressor = CatBoostRegression()
-#catboost_regressor.prepare_data(X, y, test_size=0.2)
-#catboost_regressor.train(verbose=50)
-
-# Make a prediction
-#some_data = np.random.rand(5, 10)
-#predictions = catboost_regressor.predict(some_data)
-#print(f"Predictions: {predictions}")
-
-# Evaluate the model
-#metrics = catboost_regressor.evaluate()
-#print(f"Evaluation metrics: {metrics}")

@@ -32,7 +32,6 @@ class Regressions:
         self.catboost_model = CatBoostRegression(self.params)
         self.catboost_model.prepare_data(self.X, self.y)
 
-
     def train_model_random_forest(self):
         # Initialize and prepare data for the Random Forest model
         self.catboost_model = RandomForestRegression(self.params)
@@ -58,12 +57,16 @@ if __name__ == "__main__":
         'target': 'price',
         'dropedFeatures': [] #Options 'squareMeters','numberOfRooms', 'hasYard','hasPool','floors','cityCode','cityPartRange','numPrevOwners', 'made', 'isNewBuilt'
     }
+    modelType = 'random forest'
 
     # Initialize and run the model
     paris_housing_model = Regressions(params)
     paris_housing_model.load_and_prepare_paris_data()
-    paris_housing_model.train_model_regression()
-    metrics = paris_housing_model.evaluate_model()
 
-    # To make predictions on new data, simply call:
-    # predictions = paris_housing_model.predict(X_new)
+    if modelType == 'regression':
+        paris_housing_model.train_model_regression()
+        metrics = paris_housing_model.evaluate_model()
+
+    if modelType == 'random forest':
+        paris_housing_model.train_model_random_forest()
+        paris_housing_model.evaluate_model()
