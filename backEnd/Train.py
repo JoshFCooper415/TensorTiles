@@ -1,29 +1,18 @@
 from backEnd.ConvNet import ConvNetLayers
 import torch
-import torchvision
 import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.transforms as transforms
 import torch.optim as optim
+from CIFAR10DataLoader import CIFAR10DataLoader
 
-transform = transforms.Compose(
-    [transforms.ToTensor(),
-     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-batch_size = 4
+cifar_data = CIFAR10DataLoader()
 
-trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
-                                        download=True, transform=transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-                                          shuffle=True, num_workers=2)
+train_loader = cifar_data.get_trainloader()
+test_loader = cifar_data.get_testloader()
+classes = cifar_data.get_classes()
 
-testset = torchvision.datasets.CIFAR10(root='./data', train=False,
-                                       download=True, transform=transform)
-testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-                                         shuffle=False, num_workers=2)
-
-classes = ('plane', 'car', 'bird', 'cat',
-           'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 layer_specs = [
     {'in_channels': 1, 'out_channels': 32, 'kernel_size': 3, 'use_bn': True, 'dropout_rate': 0.2},
     {'in_channels': 32, 'out_channels': 64, 'kernel_size': 3, 'use_bn': True, 'dropout_rate': 0.3},
@@ -44,7 +33,7 @@ optimizer = optim.SGD(model.parameters(), lr=hyper_paramaters.learning_rate)
 
 # Training Loop
 for epoch in range(hyper_paramaters.num_epochs):
-    for batch_idx, (data, target) in enumerate(trainloader):
+    for batch_idx, (data, target) in enumerate(train_loader):
         
         # Zero the gradients
         optimizer.zero_grad()
@@ -62,8 +51,8 @@ for epoch in range(hyper_paramaters.num_epochs):
         optimizer.step()
         
         if batch_idx % 5 == 0:
-            print(f"Epoch [{epoch+1}/{hyper_paramaters.num_epochs}], Step [{batch_idx}/{len(trainloader)}], Loss: {loss.item():.4f}")
-    for batch_idx, (data, target) in enumerate(testloader):
+            print(f"Epoch [{epoch+1}/{hyper_paramaters.num_epochs}], Step [{batch_idx}/{len(train_loader)}], Loss: {loss.item():.4f}")
+    for batch_idx, (data, target) in enumerate(test_loader):
         
         # Zero the gradients
         optimizer.zero_grad()
@@ -81,7 +70,7 @@ for epoch in range(hyper_paramaters.num_epochs):
         optimizer.step()
         
         if batch_idx % 5 == 0:
-            print(f"Epoch [{epoch+1}/{hyper_paramaters.num_epochs}], Step [{batch_idx}/{len(testloader)}], Loss: {loss.item():.4f}")
+            print(f"Epoch [{epoch+1}/{hyper_paramaters.num_epochs}], Step [{batch_idx}/{len(test_loader)}], Loss: {loss.item():.4f}")
 # Create synthetic data
 #X = np.random.rand(1000, 10)  # 1000 samples, 10 features
 #y = 5 * X[:, 0] + 3 * X[:, 1] + np.random.randn(1000)  # Synthetic target
