@@ -11,7 +11,7 @@ Window {
     visible: true
     title: "GUI"
 
-    Screen01 {
+    RandomForest {
         id: mainScreen
     }
 
