@@ -7,6 +7,7 @@ Item {
     required property string colorKey
     required property int modelData
     property bool isDone: false;
+    property var array: [[]];
 
     width: 1920
     height: 1080
@@ -1007,6 +1008,31 @@ Item {
             radius: 25
         }
 
-        onClicked: root.isDone = true
+        onClicked: {
+            array = getAllData()
+            root.isDone = true
+        }
+    }
+
+    function getAllData() {
+        array = [[null, endBlockKernelSize.value, endBlockDropoutSlider.value]]
+        if (middleBlockArea5.parent != middleBlockContainer) {
+            array.push([middleBlock5OutSize.value, middleBlock5KernelSize.value, middleBlock5DropoutSlider.value]);
+        }
+        if (middleBlockArea4.parent != middleBlockContainer) {
+            array.push([middleBlock4OutSize.value, middleBlock4KernelSize.value, middleBlock4DropoutSlider.value]);
+        }
+        if (middleBlockArea3.parent != middleBlockContainer) {
+            array.push([middleBlock3OutSize.value, middleBlock3KernelSize.value, middleBlock3DropoutSlider.value]);
+        }
+        if (middleBlockArea2.parent != middleBlockContainer) {
+            array.push([middleBlock2OutSize.value, middleBlock2KernelSize.value, middleBlock2DropoutSlider.value]);
+        }
+        if (middleBlockArea1.parent != middleBlockContainer) {
+            array.push([middleBlock1OutSize.value, middleBlock1KernelSize.value, middleBlock1DropoutSlider.value]);
+        }
+        array.push([startBlockOutSize.value, startBlockKernelSize.value, startBlockDropoutSlider.value])
+
+        console.log(array)
     }
 }

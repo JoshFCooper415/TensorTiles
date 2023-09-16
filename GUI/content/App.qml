@@ -17,6 +17,8 @@ Window {
     id: mainWindow
 
     property var screens: {"cnn":2, "rForest":1, "regression": 3, "ffnn": -1, "transformer":-1}
+    property string model: ""
+    property string dataset: ""
 
     TabBar {
         id: bar
@@ -71,7 +73,11 @@ Window {
             id: chooseModelTab
             Connections {
                 target: chooseModelTab
-                onModelChanged: stackView.currentIndex = screens[chooseModelTab.model]
+                onModelChanged: {
+                    stackView.currentIndex = screens[chooseModelTab.model]
+                    model = chooseModelTab.model
+                    dataset = chooseModelTab.dataset
+                }
             }
         }
 

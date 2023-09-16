@@ -16,5 +16,4 @@ qt6_add_qml_module(content
         QML_FILES DragNDropCNN.qml
         QML_FILES RandomForest.ui.qml
         QML_FILES Regression.ui.qml
-        QML_FILES RunButton.qml
 )
