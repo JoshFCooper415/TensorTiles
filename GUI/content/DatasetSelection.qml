@@ -6,6 +6,8 @@ Grid {
     width: 450
     height: 500
 
+    property string selected: "handNumbers";
+
     Label {
         id: modelSelectLabel
         width: 450
@@ -27,6 +29,11 @@ Grid {
         checked: true
         anchors.horizontalCenter: modelSelectLabel.horizontalCenter
         anchors.topMargin: 10
+
+        Connections {
+            target: handwrittenNumbersSelected
+            onClicked: selected = "handNumbers"
+        }
     }
 
     RadioButton {
@@ -36,6 +43,11 @@ Grid {
         text: qsTr("Handwritten Shapes")
         anchors.top: handwrittenNumbersSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: handwrittenShapesSelected
+            onClicked: selected = "handShapes"
+        }
     }
 
     RadioButton {
@@ -45,6 +57,11 @@ Grid {
         text: qsTr("Crayon Colors")
         anchors.top: handwrittenShapesSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: crayonColorsSelected
+            onClicked: selected = "crayon"
+        }
     }
 
     RadioButton {
@@ -54,6 +71,11 @@ Grid {
         text: qsTr("Real Estate")
         anchors.top: crayonColorsSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: realEstateSelected
+            onClicked: selected = "realEstate"
+        }
     }
 
     RadioButton {
@@ -63,6 +85,11 @@ Grid {
         text: qsTr("Finance")
         anchors.top: realEstateSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: financeSelected
+            onClicked: selected = "finance"
+        }
     }
 
     RadioButton {
@@ -72,6 +99,11 @@ Grid {
         text: qsTr("Spectograph")
         anchors.top: financeSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: spectographSelected
+            onClicked: selected = "spectograph"
+        }
     }
 
     RadioButton {
@@ -81,5 +113,10 @@ Grid {
         text: qsTr("Upload Option")
         anchors.top: spectographSelected.bottom
         anchors.topMargin: 10
+
+        Connections {
+            target: uploadSelected
+            onClicked: selected = "upload"
+        }
     }
 }

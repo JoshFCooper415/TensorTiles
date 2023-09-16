@@ -19,7 +19,7 @@ public:
     QString test();
     void setReady(const bool &ready);
     void setTest(const QString &test);
-    Q_INVOKABLE void doStuff(const QString &stuff);
+    Q_INVOKABLE void doStuff(const QString &model, const QString &dataset);
 
 signals:
     void readyChanged();

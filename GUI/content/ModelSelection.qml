@@ -6,7 +6,6 @@ Grid {
     width: 450
     height: 400
 
-//    signal selectedChanged(string selection)
     property string selected: "cnn";
 
     Label {

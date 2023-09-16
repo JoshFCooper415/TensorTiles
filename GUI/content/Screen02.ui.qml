@@ -68,7 +68,7 @@ Rectangle {
         Connections {
             target: button
             onClicked: {
-                backend.doStuff(modelSelection.selected)
+                backend.doStuff(modelSelection.selected, datasetSelection.selected)
             }
         }
     }

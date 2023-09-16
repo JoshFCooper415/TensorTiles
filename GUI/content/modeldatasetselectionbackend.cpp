@@ -35,6 +35,6 @@ void ModelDatasetSelectionBackend::setTest(const QString &test)
     emit testChanged();
 }
 
-void ModelDatasetSelectionBackend::doStuff(const QString &stuff) {
-    std::cout << stuff.toStdString() << std::endl;
+void ModelDatasetSelectionBackend::doStuff(const QString &model, const QString &dataset) {
+    std::cout << model.toStdString() << std::endl;
 }
