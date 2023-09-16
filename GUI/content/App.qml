@@ -16,7 +16,7 @@ Window {
     title: qsTr("StackLayout Test")
     id: mainWindow
 
-    property var screens: {"cnn":0, "rForest":1, "regression": 2, "ffnn": 3, "transformer":4}
+    property var screens: {"cnn":2, "rForest":1, "regression": 3, "ffnn": -1, "transformer":-1}
 
     TabBar {
         id: bar
@@ -70,36 +70,37 @@ Window {
         Screen02 {
             id: chooseModelTab
             Connections {
-                target: Screen02
-                onModelChanged: stackView.currentIndex = screens[modelSelection.selected]
+                target: chooseModelTab
+                onModelChanged: stackView.currentIndex = screens[chooseModelTab.model]
             }
         }
-        Rectangle {
-            id: builderTab
-            color: "#87CEFA"
-            Text {
-                text: qsTr("Other thing")
-                anchors.centerIn: parent
-            }
-            Button {
-                id: runButton1
-                x: 487
-                y: 337
-                text: qsTr("Run")
-                icon.color: "#ffffff"
-                onClicked: stackView.currentIndex = 2
-            }
+
+        // index 1 - Random Forest
+        RandomForest {
+            id: randomForest
         }
+        //index 2 - CNN
+        DragNDropCNN {
+            id: convNet
+            colorKey: "orange"
+            modelData: 0
+        }
+        // index 3 - Regression
         Rectangle {
-            id: runTab
+            id: regression
             color: "orange"
             Loader {
-                id: chooseModelLoader
-                source: "./Screen02.ui.qml"
+                id: regressionLoader
+                source: "./Regression.ui.qml"
                 anchors.fill: parent
             }
         }
-        // index 2 - Inference
+
+        Rectangle {
+            id: runTab
+            color: "orange"
+        }
+        // index 5 - Inference
         Rectangle {
             id: inferenceTab
             color: "purple"
@@ -109,32 +110,6 @@ Window {
                 y: 337
                 text: qsTr("Restart")
                 onClicked: stackView.currentIndex = 0
-            }
-        }
-        // index 3 - Random Forest
-        Rectangle {
-            id: randomForest
-            color: "orange"
-            Loader {
-                id: randomForestLoader
-                source: "./RandomForest.ui.qml"
-                anchors.fill: parent
-            }
-        }
-        //index 4 - CNN
-        DragNDropCNN {
-            id: convNet
-            colorKey: "orange"
-            modelData: 0
-        }
-        // index 5 - Regression
-        Rectangle {
-            id: regression
-            color: "orange"
-            Loader {
-                id: regressionLoader
-                source: "./Regression.ui.qml"
-                anchors.fill: parent
             }
         }
     }
