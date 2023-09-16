@@ -1,17 +1,18 @@
-from catboost import CatBoostRegressor, Pool
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 import numpy as np
 
-class CatBoostRegression:
+class RandomForestRegression:
     def __init__(self, params=None):
-        # Initialize CatBoost parameters
+        # Initialize Random Forest parameters
         self.params = params if params else {
-            'iterations': 500,
-            'learning_rate': 0.1,
-            'depth': 6
+            'n_estimators': 100,
+            'max_depth': None,
+            'random_state': 42
         }
         # Initialize the model
-        self.model = CatBoostRegressor(**self.params)
+        self.model = RandomForestRegressor(**self.params)
         
     def prepare_data(self, X, y, test_size=0.2, random_state=None):
         """
@@ -20,14 +21,12 @@ class CatBoostRegression:
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
             X, y, test_size=test_size, random_state=random_state
         )
-        self.train_pool = Pool(self.X_train, self.y_train)
-        self.test_pool = Pool(self.X_test, self.y_test)
         
-    def train(self, verbose=True):
+    def train(self):
         """
-        Train the CatBoost model.
+        Train the Random Forest model.
         """
-        self.model.fit(self.train_pool, eval_set=self.test_pool, verbose=verbose)
+        self.model.fit(self.X_train, self.y_train)
         
     def predict(self, X):
         """
@@ -39,4 +38,8 @@ class CatBoostRegression:
         """
         Evaluate the trained model on the test dataset.
         """
-        return self.model.eval_metrics(self.test_pool, ['RMSE', 'MAE'])
+        y_pred = self.predict(self.X_test)
+        rmse = np.sqrt(mean_squared_error(self.y_test, y_pred))
+        mae = mean_absolute_error(self.y_test, y_pred)
+        return {'RMSE': rmse, 'MAE': mae}
+

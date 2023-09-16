@@ -1,7 +1,10 @@
 from backEnd.ConvNet import ConvNetLayers
 import torch
 import torchvision
+import torch.nn.functional as F
+import torch.optim as optim
 import torchvision.transforms as transforms
+import torch.optim as optim
 
 transform = transforms.Compose(
     [transforms.ToTensor(),
@@ -79,3 +82,37 @@ for epoch in range(hyper_paramaters.num_epochs):
         
         if batch_idx % 5 == 0:
             print(f"Epoch [{epoch+1}/{hyper_paramaters.num_epochs}], Step [{batch_idx}/{len(testloader)}], Loss: {loss.item():.4f}")
+# Create synthetic data
+#X = np.random.rand(1000, 10)  # 1000 samples, 10 features
+#y = 5 * X[:, 0] + 3 * X[:, 1] + np.random.randn(1000)  # Synthetic target
+
+# Initialize and train the model
+#catboost_regressor = CatBoostRegression()
+#catboost_regressor.prepare_data(X, y, test_size=0.2)
+#catboost_regressor.train(verbose=50)
+
+# Make a prediction
+#some_data = np.random.rand(5, 10)
+#predictions = catboost_regressor.predict(some_data)
+#print(f"Predictions: {predictions}")
+
+# Evaluate the model
+#metrics = catboost_regressor.evaluate()
+#print(f"Evaluation metrics: {metrics}")
+# Create synthetic data
+#X = np.random.rand(1000, 10)  # 1000 samples, 10 features
+#y = 5 * X[:, 0] + 3 * X[:, 1] + np.random.randn(1000)  # Synthetic target
+
+# Initialize and train the model
+#catboost_regressor = CatBoostRegression()
+#catboost_regressor.prepare_data(X, y, test_size=0.2)
+#catboost_regressor.train(verbose=50)
+
+# Make a prediction
+#some_data = np.random.rand(5, 10)
+#predictions = catboost_regressor.predict(some_data)
+#print(f"Predictions: {predictions}")
+
+# Evaluate the model
+#metrics = catboost_regressor.evaluate()
+#print(f"Evaluation metrics: {metrics}")
