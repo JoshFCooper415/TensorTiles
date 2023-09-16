@@ -1,5 +1,5 @@
-from pydantic import BaseModel,validator
-from typing import Union,List
+from pydantic import BaseModel,validator,parse_obj_as
+from typing import Union,List,Dict
 
 class MLModel(BaseModel):
     layer_specs: dict
@@ -37,24 +37,12 @@ class TrainingModelConfig(BaseModel):
     dropedFeatures: List[str]
 
 class AIConfigurations(BaseModel):
-    args: Union[List[Union[str, TrainingModelConfig]],str]
+    args: List[Union[str, TrainingModelConfig]]
 
-class validJSON(BaseModel):
-    schemaType: str
-    JSON_data: Union[MLModel, AIConfigurations]
+class LossData(BaseModel):
+    data: list
 
-#AIConfigurations Example:
-# Example usage:
-# data = {
-#     "args": [
-#         "Regression",
-#         {
-#             "learning_rate": 0.00001,
-#             "depth": 1000,
-#             "n_estimators": 100,
-#             "target": "hasStorageRoom",
-#             "dropedFeatures": []
-#         },
-#         "random forest"
-#     ]
-# }
+
+class TrainingData(BaseModel):
+    numberOfEpochs: int
+    

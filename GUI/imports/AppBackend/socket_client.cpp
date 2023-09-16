@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <string>
+#include <vector>
 #include <cstdlib>
 
 int clientSocket; // Declare a global client socket for connection
@@ -71,9 +72,9 @@ void sendValidJSONToServer(const std::string& validJSONString) {
     const char* validJSON_cstr = validJSONString.c_str();
 
     // Send the validJSON message to the server using sendJSONMessage function
-    if (connectToServer("127.0.0.1", 8080)) { // Replace with your server's address and port
+    if (connectToServer("127.0.0.1", 8080)) {
         sendJSONMessage(validJSON_cstr);
-        receiveServerResponse(); // Handle the server's response after sending JSON
+        receiveServerResponse(); 
         
         // Call the function to disconnect from the server
         disconnectFromServer();
@@ -111,56 +112,57 @@ void sendMLModelSchema(
     sendValidJSONToServer(validJSONString);
 }
 
-// Function to configure and send TrainingModelConfig schema
-void sendTrainingModelConfigSchema(
+
+// Function to configure and send AIConfigurations schema
+void sendAIConfigurationsSchema(
+    const std::string& argType,
     double learning_rate, int depth, int n_estimators,
-    const std::string& target, const std::string& dropedFeatures
+    const std::string& target, const std::vector<std::string>& droppedFeatures,
+    const std::string& specificType,
+    const std::string& dataSet
 ) {
-    std::string schemaType = "TrainingModelConfig";
+    std::string schemaType = "AIConfigurations";
     std::string jsonData =
+        "{"
+        "\"args\": ["
+        "\"" + argType + "\","
         "{"
         "\"learning_rate\": " + std::to_string(learning_rate) + ","
         "\"depth\": " + std::to_string(depth) + ","
         "\"n_estimators\": " + std::to_string(n_estimators) + ","
         "\"target\": \"" + target + "\","
-        "\"dropedFeatures\": [" + dropedFeatures + "]"
-        "}";
-    
-    std::string validJSONString =
-        "{"
-        "\"schemaType\": \"" + schemaType + "\","
-        "\"JSON_data\": " + jsonData +
-        "}";
-    
-    sendValidJSONToServer(validJSONString);
-}
+        "\"dropedFeatures\": [";
 
-// Function to configure and send AIConfigurations schema
-void sendAIConfigurationsSchema(
-    const std::string& argType, const std::string& argData
-) {
-    std::string schemaType = "AIConfigurations";
-    std::string jsonData =
-        "["
-        "\"" + argType + "\","
-        "{" + argData + "},"
-        "\"random forest\""
-        "]";
-    
+    // Add dropped features to the JSON
+    for (size_t i = 0; i < droppedFeatures.size(); ++i) {
+        jsonData += "\"" + droppedFeatures[i] + "\"";
+        if (i < droppedFeatures.size() - 1) {
+            jsonData += ",";
+        }
+    }
+
+    jsonData +=
+        "]"
+        "},"
+        "\"" + specificType + "\","
+        "\"" + dataSet + "\""
+        "]"
+        "}";
+
     std::string validJSONString =
         "{"
         "\"schemaType\": \"" + schemaType + "\","
         "\"JSON_data\": " + jsonData +
         "}";
-    
+
     sendValidJSONToServer(validJSONString);
 }
 
 int main() {
     // Call the functions to send different schema types to the server
     sendMLModelSchema(64, 128, 3, true, 0.2, 0.001, 100);
-    sendTrainingModelConfigSchema(0.01, 10, 100, "example", "[]");
-    sendAIConfigurationsSchema("Regression", "\"learning_rate\": 0.00001");
+    std::vector<std::string> droppedFeatures = {"feature1", "feature2"};
+    sendAIConfigurationsSchema("Regression", 0.001, 10, 100, "output", droppedFeatures, "random forest", "data set");
 
     return 0;
 }

@@ -11,4 +11,15 @@ qt6_add_qml_module(content
     RESOURCES
         fonts/fonts.txt
         QML_FILES Screen02.ui.qml
+        QML_FILES DatasetSelection.qml
+        QML_FILES ModelSelection.qml
+        QML_FILES DragNDropCNN.qml
+        QML_FILES RandomForest.ui.qml
+        QML_FILES Regression.ui.qml
+        Untitled_Artwork.png
+        "Untitled_Artwork (1).png"
+        "Untitled_Artwork (2).png"
+        "Untitled_Artwork (3).png"
+        "Untitled_Artwork (4).png"
+        Title.png
 )

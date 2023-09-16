@@ -7,9 +7,13 @@ ListModel {
     id: eventListModel
 
     ListElement {
-        eventId: "enterPressed"
+        eventId: "enterPressed00"
         eventDescription: "Emitted when pressing the enter button"
         shortcut: "Return"
         parameters: "Enter"
+    }
+
+    ListElement {
+    eventId: "event"
     }
 }
