@@ -13,16 +13,4 @@ qt6_add_qml_module(content
         QML_FILES Screen02.ui.qml
         QML_FILES DatasetSelection.qml
         QML_FILES ModelSelection.qml
-        SOURCES modeldatasetselectionbackend.h
-        SOURCES modeldatasetselectionbackend.cpp
-)
-
-
-qt_add_qml_module(backendmodule
-    URI ModelDatasetSelectionBackend
-    VERSION 1.0
-    SOURCES
-        modeldatasetselectionbackend.cpp
-        modeldatasetselectionbackend.h
-    RESOURCE_PREFIX "/"
 )
