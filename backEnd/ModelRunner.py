@@ -26,16 +26,19 @@ class ModelRunner:
         '''
         params = self.args[1]
         modelType = self.args[2]
+        dataset = self.args[3]
         # Initialize and run the model
-        paris_housing_model = Regressions(params)
-        paris_housing_model.load_and_prepare_paris_data()
-
+        model = Regressions(params)
+        if dataset == "paris":
+            model.load_and_prepare_paris_data()
+        elif dataset == "new":
+            model.load_and_prepare_new_data()
         if modelType == 'regression':
-            paris_housing_model.train_model_regression()
-            print(paris_housing_model.evaluate_model())
+            model.train_model_regression()
+            print(model.evaluate_model())
         elif modelType == 'random forest':
-            paris_housing_model.train_model_random_forest()
-            print(paris_housing_model.evaluate_model())
+            model.train_model_random_forest()
+            print(model.evaluate_model())
 
     def run_cnn_model(self):
         '''layer_specs = [
@@ -50,16 +53,14 @@ class ModelRunner:
 
 
 if __name__ == '__main__':
-    #args = ["Regression",{'learning_rate': 0.00001,'depth': 10,'n_estimators': 100,'target': 'hasStorageRoom', 'dropedFeatures': []},'random forest']
-    
+    #args = ["Regression",{'learning_rate': 0.00001,'depth': 10,'n_estimators': 100,'target': 'hasStorageRoom', 'dropedFeatures': []},'random forest','dataset']
+
     args = ["CNN",
             [
-            {'in_channels': 3, 'out_channels': 64, 'kernel_size': 5, 'use_bn': True, 'dropout_rate': 0.0},
-            {'in_channels': 64, 'out_channels': 32, 'kernel_size': 3, 'use_bn': True, 'dropout_rate': 0.0},
-            {'in_channels': 32, 'out_channels': 32, 'kernel_size': 2, 'use_bn': True, 'dropout_rate': 0.0}
+            {'in_channels': 3, 'out_channels': 64, 'kernel_size': 5, 'use_bn': True, 'dropout_rate': 0.0}
             ],
-            {'learning_rate': 0.1, 'num_epochs': 2},
-            "CIFAR10"]
+            {'learning_rate': 1e-4, 'num_epochs': 10},
+            "AudioMNIST"]
     
     runner = ModelRunner(args)
     

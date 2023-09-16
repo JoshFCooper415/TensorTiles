@@ -57,9 +57,12 @@ class ConvNetLayers(nn.Module):
     def initialize_fc(self, dataset):
         # Map dataset names to input shapes
         dataset_to_shape = {
-            "CIFAR10": (3, 32, 32),
-            "MNIST": (1, 28, 28)
-        }
+        "CIFAR10": (3, 32, 32),
+        "MNIST": (1, 28, 28),
+        "FashionMNIST": (1, 28, 28),
+        "STL10": (3, 96, 96)
+    }
+
     
         # Get the input shape for the dataset
         input_shape = dataset_to_shape.get(dataset)
@@ -77,7 +80,8 @@ class ConvNetLayers(nn.Module):
     
         # Initialize the fully connected layer with the calculated input size
         self.fc = nn.Linear(num_features, 32)  # Assuming 10 classes
-
+        self.linear1 = nn.Linear(32, 32)
+        self.linear2 = nn.Linear(32, 10)
 
     def forward(self, x):
         if self.fc is None:
@@ -91,6 +95,6 @@ class ConvNetLayers(nn.Module):
         x = x.view(x.size(0), -1)
 
         x = self.fc(x)
-        x = nn.Linear(32, 32)(x)
-        x = nn.Linear(32, 10)(x)
+        x = self.linear1(x)
+        x = self.linear2(x)
         return x
