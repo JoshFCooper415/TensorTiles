@@ -1,17 +1,32 @@
-from sklearn.ensemble import RandomForestRegressor
+from catboost import CatBoostClassifier, Pool
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import numpy as np
 
-class RandomForestRegression:
+class CatForest:
     def __init__(self, params=None):
         # Initialize Random Forest parameters
         self.params = params if params else {
-            'n_estimators': 100,
-            'max_depth': None,
+            'iterations': 500,
+            'learning_rate': 0.1,
+            'depth': 6,
+            'n_estimators' : 50,
         }
+        self.create_model()
+        print("TESTING")
         # Initialize the model
-        self.model = RandomForestRegressor(**self.params)
+    def filter_params(self, valid_params):
+        return {k: v for k, v in self.params.items() if k in valid_params}
+
+    def create_model(self):
+        # List of valid arguments for CatBoostRegressor
+        valid_params = [
+        'iterations',
+        'learning_rate',
+        'n_estimators'
+        ]
+        filtered_params = self.filter_params(valid_params)
+        self.model = CatBoostClassifier(**filtered_params)
         
     def prepare_data(self, X, y, test_size=0.2, random_state=0):
         """
@@ -20,12 +35,14 @@ class RandomForestRegression:
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
             X, y, test_size=test_size, random_state=random_state
         )
+        self.train_pool = Pool(self.X_train, self.y_train)
+        self.test_pool = Pool(self.X_test, self.y_test)
         
-    def train(self):
+    def train(self, verbose=True):
         """
-        Train the Random Forest model.
+        Train the CatBoost model.
         """
-        self.model.fit(self.X_train, self.y_train)
+        self.model.fit(self.train_pool, eval_set=self.test_pool, verbose=verbose)
         
     def predict(self, X):
         """
@@ -41,4 +58,3 @@ class RandomForestRegression:
         rmse = np.sqrt(mean_squared_error(self.y_test, y_pred))
         mae = mean_absolute_error(self.y_test, y_pred)
         return {'RMSE': rmse, 'MAE': mae}
-

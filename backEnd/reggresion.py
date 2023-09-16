@@ -15,7 +15,20 @@ class CatBoostRegression:
 
         }
         # Initialize the model
-        self.model = CatBoostRegressor(**self.params)
+        self.create_model()
+    def filter_params(self, valid_params):
+        return {k: v for k, v in self.params.items() if k in valid_params}
+
+    def create_model(self):
+        # List of valid arguments for CatBoostRegressor
+        valid_params = [
+            'iterations',
+            'learning_rate',
+            'n_estimators'
+        ]
+
+        filtered_params = self.filter_params(valid_params)
+        self.model = CatBoostRegressor(**filtered_params)
         
     def prepare_data(self, X, y, test_size=0.2, random_state=0):
         """

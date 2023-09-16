@@ -1,7 +1,7 @@
 import pandas as pd
 import zipfile
-from randomForest import RandomForestRegression
 from reggresion import CatBoostRegression
+from randomForest import CatForest
 
 class Regressions:
     def __init__(self, params):
@@ -9,15 +9,16 @@ class Regressions:
         self.df = None
         self.X = None
         self.y = None
+        self.target = params.get('target')
         self.catboost_model = None
 
     def load_and_prepare_paris_data(self):
         # Extract the CSV file from the ZIP file
-        with zipfile.ZipFile('paris_housing_data.zip', 'r') as zip_ref:
+        with zipfile.ZipFile('ParisHousingData.zip', 'r') as zip_ref:
             zip_ref.extractall('./')
         
         # Load the CSV file into a pandas DataFrame
-        self.df = pd.read_csv('paris_housing_data.csv')
+        self.df = pd.read_csv('ParisHousing.csv')
         
         # Feature matrix
         self.X = self.df.drop(self.params.get('target'), axis=1)
@@ -32,11 +33,12 @@ class Regressions:
         self.catboost_model = CatBoostRegression(self.params)
         self.catboost_model.prepare_data(self.X, self.y)
 
+        self.catboost_model.train()
+
     def train_model_random_forest(self):
         # Initialize and prepare data for the Random Forest model
-        self.catboost_model = RandomForestRegression(self.params)
+        self.catboost_model = CatForest(self.params)
         self.catboost_model.prepare_data(self.X, self.y)
-        
         # Train the model
         self.catboost_model.train()
 
