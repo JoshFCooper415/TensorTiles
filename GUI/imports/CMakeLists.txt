@@ -2,3 +2,5 @@
 ### Do not change
 
 add_subdirectory(GUI)
+add_subdirectory(ModelDatasetSelectionBackend)
+add_subdirectory(AppBackend)
