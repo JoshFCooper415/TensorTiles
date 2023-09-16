@@ -22,10 +22,6 @@ class MNISTDataLoader:
                                                   download=True, transform=self.transform)
         self.testloader = torch.utils.data.DataLoader(self.testset, batch_size=self.batch_size,
                                                       shuffle=False, num_workers=self.num_workers)
-        for inputs, outputs in self.trainloader:
-            print("Input shape:", inputs.shape)
-            print("Output shape:", outputs.shape)
-            break
     def get_trainloader(self):
         return self.trainloader
     
