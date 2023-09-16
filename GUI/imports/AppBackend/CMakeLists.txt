@@ -9,5 +9,6 @@ qt_add_qml_module(appbackend
     SOURCES
         appbackend.cpp
         appbackend.h
+        socket_client.cpp
     RESOURCE_PREFIX "/"
 )
