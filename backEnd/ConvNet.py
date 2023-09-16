@@ -8,7 +8,6 @@ class ConvNetBlock(nn.Module):
         
         # Define the convolutional layer
         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding)
-        
         # Optionally add batch normalization
         self.use_bn = use_bn
         if use_bn:
@@ -42,8 +41,9 @@ class ConvNetBlock(nn.Module):
 class ConvNetLayers(nn.Module):
     def __init__(self, layer_specs):  # layer_specs is a list of dictionaries
         super(ConvNetLayers, self).__init__()
-        
+        self.fc = None
         self.layers = nn.ModuleList()
+        self.layer_specs = layer_specs
         
         for spec in layer_specs:
             layer = ConvNetBlock(
@@ -54,10 +54,21 @@ class ConvNetLayers(nn.Module):
                 dropout_rate=spec.get('dropout_rate', 0.0)
             )
             self.layers.append(layer)
-            
+    def initialize_fc(self, dataset):
+        if dataset == "CIFAR10":
+            self.fc = nn.Linear(640,10)
+        elif dataset == "MNIST":
+            self.fc = nn.Linear(196,10)
     def forward(self, x):
+        if self.fc is None:
+            raise RuntimeError("Fully connected layer (self.fc) has not been initialized.")
+
         for layer in self.layers:
             x = layer(x)
-            x = F.max_pool2d(x, 2)  # Adding max pooling after each layer
-        return x
+            x = F.max_pool2d(x, 2)
+
+        # Flattening the tensor and passing through the fully connected layer
+        x = x.view(x.size(0), -1)
+        x = self.fc(x)
     
+        return x

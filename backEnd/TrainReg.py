@@ -48,25 +48,3 @@ class Regressions:
         # Make predictions on new data
         return self.catboost_model.predict(X_new)
 
-if __name__ == "__main__":
-    params = {
-        'iterations': 500,
-        'learning_rate': 0.1,
-        'depth': 6,
-        'n_estimators': 50,
-        'target': 'price',
-        'dropedFeatures': [] #Options 'squareMeters','numberOfRooms', 'hasYard','hasPool','floors','cityCode','cityPartRange','numPrevOwners', 'made', 'isNewBuilt'
-    }
-    modelType = 'random forest'
-
-    # Initialize and run the model
-    paris_housing_model = Regressions(params)
-    paris_housing_model.load_and_prepare_paris_data()
-
-    if modelType == 'regression':
-        paris_housing_model.train_model_regression()
-        metrics = paris_housing_model.evaluate_model()
-
-    if modelType == 'random forest':
-        paris_housing_model.train_model_random_forest()
-        paris_housing_model.evaluate_model()
