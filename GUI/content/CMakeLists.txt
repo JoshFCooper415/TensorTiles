@@ -11,4 +11,6 @@ qt6_add_qml_module(content
     RESOURCES
         fonts/fonts.txt
         QML_FILES Screen02.ui.qml
+        QML_FILES DatasetSelection.qml
+        QML_FILES ModelSelection.qml
 )

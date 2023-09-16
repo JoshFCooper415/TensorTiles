@@ -24,7 +24,6 @@ Window {
             left: mainWindow.left
             right: mainWindow.right
         }
-
     }
 
     TabButton {

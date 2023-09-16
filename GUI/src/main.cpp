@@ -3,6 +3,10 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QObject>
+#include <QQuickItem>
+#include <QObjectList>
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
@@ -24,14 +28,13 @@ int main(int argc, char *argv[])
         },
         Qt::QueuedConnection);
 
+
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
-
     engine.load(url);
 
     if (engine.rootObjects().isEmpty()) {
         return -1;
     }
-
     return app.exec();
 }
