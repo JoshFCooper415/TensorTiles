@@ -84,6 +84,11 @@ Window {
             id: convNet
             colorKey: "orange"
             modelData: 0
+
+            Connections {
+                target: convNet
+                onIsDoneChanged: stackView.currentIndex = 4
+            }
         }
         // index 3 - Regression
         Rectangle {

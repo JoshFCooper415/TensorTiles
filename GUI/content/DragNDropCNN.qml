@@ -6,9 +6,33 @@ Item {
 
     required property string colorKey
     required property int modelData
+    property bool isDone: false;
 
     width: 1920
     height: 1080
+
+    Label {
+        id: noEpochsLabel
+        anchors.left: parent.left
+        anchors.bottom: dropContainer.top
+        anchors.bottomMargin: 15
+        anchors.leftMargin: 15
+        color: "#273c30"
+        text: qsTr("Number of Epochs: ")
+        font.family: "Verdana"
+        font.pointSize: 12
+        anchors.topMargin: 10
+
+        SpinBox {
+            id: noEpochs
+            value: 5
+            from: 1
+            to: 100
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.right
+            anchors.leftMargin: 15
+        }
+    }
 
     Rectangle {
         id: dropContainer
@@ -965,5 +989,24 @@ Item {
                 }
             }
         }
+    }
+
+    Button {
+        id: finish
+        width: 128
+        height: 64
+        text: qsTr("Finish")
+        font.pixelSize: 35
+        anchors.right: parent.right
+        anchors.rightMargin: 15
+        anchors.bottom: mouseArea3Container.top
+        anchors.bottomMargin: 15
+
+        background: Rectangle {
+            color: "darkgreen"
+            radius: 25
+        }
+
+        onClicked: root.isDone = true
     }
 }
