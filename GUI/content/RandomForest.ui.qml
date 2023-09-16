@@ -19,18 +19,20 @@ Rectangle {
 
     Image {
         id: image
-        x: 593
-        y: 531
-        width: 758
-        height: 406
+        x: 697
+        y: 617
+        width: 640
+        height: 317
+        anchors.bottom: parent.bottom
         source: "../../../../Pictures/Saved Pictures/TensorTiles/RandomForestBackground.jpg"
+        anchors.bottomMargin: 146
         fillMode: Image.PreserveAspectFit
     }
 
     Slider {
         id: sizeTree
-        x: 1160
-        y: 317
+        x: 1161
+        y: 391
         stepSize: 1
         to: 16
         from: 1
@@ -41,8 +43,8 @@ Rectangle {
 
     Slider {
         id: numTrees
-        x: 764
-        y: 317
+        x: 781
+        y: 391
         orientation: Qt.Vertical
         value: 100
         stepSize: 1
@@ -53,8 +55,9 @@ Rectangle {
 
     Label {
         id: numTreesVal
-        x: 703
-        y: 376
+        x: 702
+        y: 442
+        height: 21
         color: "#121842"
         text: numTrees.value
         font.pointSize: 14
@@ -64,7 +67,7 @@ Rectangle {
     Label {
         id: numTreesTitle
         x: 645
-        y: 265
+        y: 338
         text: qsTr("Number of Trees")
         font.family: "Verdana"
         font.pointSize: 25
@@ -72,8 +75,8 @@ Rectangle {
 
     Label {
         id: sizeTreesTitle
-        x: 1073
-        y: 265
+        x: 1074
+        y: 338
         text: qsTr("Size of Trees")
         font.pointSize: 25
         font.family: "Verdana"
@@ -82,11 +85,22 @@ Rectangle {
     Label {
         id: sizeTreesVal
         x: 1119
-        y: 376
+        y: 440
         color: "#121842"
         text: sizeTree.value
         font.pointSize: 14
         font.family: "Verdana"
+    }
+
+    Label {
+        id: title
+        x: 806
+        y: 225
+        color: "#273c30"
+        text: qsTr("Random Forest")
+        font.family: "Verdana"
+        font.styleName: "Bold"
+        font.pointSize: 35
     }
     states: [
         State {
