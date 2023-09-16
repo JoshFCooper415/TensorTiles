@@ -3,7 +3,7 @@ import torchvision
 import torchvision.transforms as transforms
 
 class MNISTDataLoader:
-    def __init__(self, root='./data', batch_size=4, num_workers=2):
+    def __init__(self, root='./data', batch_size=32, num_workers=2):
         self.root = root
         self.batch_size = batch_size
         self.num_workers = num_workers

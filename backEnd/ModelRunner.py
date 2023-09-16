@@ -50,16 +50,16 @@ class ModelRunner:
 
 
 if __name__ == '__main__':
-    args = ["Regression",{'learning_rate': 0.00001,'depth': 1000,'n_estimators': 100,'target': 'hasStorageRoom', 'dropedFeatures': []},'random forest']
-    #MNIST in = 1 out = 4
-    #CIFAR in = 3 out = 10
-    '''args = ["CNN",
+    #args = ["Regression",{'learning_rate': 0.00001,'depth': 10,'n_estimators': 100,'target': 'hasStorageRoom', 'dropedFeatures': []},'random forest']
+    
+    args = ["CNN",
             [
-            {'in_channels': 3, 'out_channels': 64, 'kernel_size': 2, 'use_bn': True, 'dropout_rate': 0.2},
-            {'in_channels': 64, 'out_channels': 10, 'kernel_size': 3, 'use_bn': True, 'dropout_rate': 0.3},
+            {'in_channels': 3, 'out_channels': 64, 'kernel_size': 5, 'use_bn': True, 'dropout_rate': 0.0},
+            {'in_channels': 64, 'out_channels': 32, 'kernel_size': 3, 'use_bn': True, 'dropout_rate': 0.0},
+            {'in_channels': 32, 'out_channels': 32, 'kernel_size': 2, 'use_bn': True, 'dropout_rate': 0.0}
             ],
-            {'learning_rate': 0.001, 'num_epochs': 1},
-            "CIFAR10"]'''
+            {'learning_rate': 0.1, 'num_epochs': 2},
+            "CIFAR10"]
     
     runner = ModelRunner(args)
     

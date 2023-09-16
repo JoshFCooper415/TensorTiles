@@ -55,10 +55,30 @@ class ConvNetLayers(nn.Module):
             )
             self.layers.append(layer)
     def initialize_fc(self, dataset):
-        if dataset == "CIFAR10":
-            self.fc = nn.Linear(640,10)
-        elif dataset == "MNIST":
-            self.fc = nn.Linear(196,10)
+        # Map dataset names to input shapes
+        dataset_to_shape = {
+            "CIFAR10": (3, 32, 32),
+            "MNIST": (1, 28, 28)
+        }
+    
+        # Get the input shape for the dataset
+        input_shape = dataset_to_shape.get(dataset)
+        if input_shape is None:
+            raise ValueError(f"Unknown dataset: {dataset}")
+    
+        # Perform a forward pass with a dummy input to get the output shape
+        x_dummy = torch.zeros(1, *input_shape)
+        for layer in self.layers:
+            x_dummy = layer(x_dummy)
+            x_dummy = F.max_pool2d(x_dummy, 2)
+        
+        # Calculate the number of input features for the Linear layer
+        num_features = x_dummy.view(1, -1).size(1)
+    
+        # Initialize the fully connected layer with the calculated input size
+        self.fc = nn.Linear(num_features, 32)  # Assuming 10 classes
+
+
     def forward(self, x):
         if self.fc is None:
             raise RuntimeError("Fully connected layer (self.fc) has not been initialized.")
@@ -69,6 +89,8 @@ class ConvNetLayers(nn.Module):
 
         # Flattening the tensor and passing through the fully connected layer
         x = x.view(x.size(0), -1)
+
         x = self.fc(x)
-    
+        x = nn.Linear(32, 32)(x)
+        x = nn.Linear(32, 10)(x)
         return x
