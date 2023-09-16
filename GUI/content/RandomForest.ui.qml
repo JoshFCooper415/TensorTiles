@@ -19,20 +19,32 @@ Rectangle {
 
     Image {
         id: image
-        x: 697
-        y: 617
-        width: 640
-        height: 317
+        x: 357
+        y: 52
+        width: 1361
+        height: 1028
         anchors.bottom: parent.bottom
-        source: "../../../../Pictures/Saved Pictures/TensorTiles/RandomForestBackground.jpg"
-        anchors.bottomMargin: 146
+        source: "../asset_imports/randomForestBackground.png"
+        anchors.bottomMargin: 0
+        opacity: 0.5
         fillMode: Image.PreserveAspectFit
+    }
+
+    Rectangle {
+        id: randomForestBackgroud
+        width: 928
+        height: 419
+        x: 574
+        y: 347
+        color: "lightgrey"
+        opacity: 0.8
+        radius: 40
     }
 
     Slider {
         id: sizeTree
-        x: 1161
-        y: 391
+        x: 1194
+        y: 485
         stepSize: 1
         to: 16
         from: 1
@@ -43,8 +55,8 @@ Rectangle {
 
     Slider {
         id: numTrees
-        x: 781
-        y: 391
+        x: 810
+        y: 485
         orientation: Qt.Vertical
         value: 100
         stepSize: 1
@@ -55,10 +67,11 @@ Rectangle {
 
     Label {
         id: numTreesVal
-        x: 702
-        y: 442
+        x: 728
+        y: 530
+        width: 30
         height: 21
-        color: "#121842"
+        color: "black"
         text: numTrees.value
         font.pointSize: 14
         font.family: "Verdana"
@@ -66,8 +79,8 @@ Rectangle {
 
     Label {
         id: numTreesTitle
-        x: 645
-        y: 338
+        x: 691
+        y: 423
         text: qsTr("Number of Trees")
         font.family: "Verdana"
         font.pointSize: 25
@@ -75,8 +88,8 @@ Rectangle {
 
     Label {
         id: sizeTreesTitle
-        x: 1074
-        y: 338
+        x: 1094
+        y: 423
         text: qsTr("Size of Trees")
         font.pointSize: 25
         font.family: "Verdana"
@@ -84,8 +97,8 @@ Rectangle {
 
     Label {
         id: sizeTreesVal
-        x: 1119
-        y: 440
+        x: 1138
+        y: 520
         color: "#121842"
         text: sizeTree.value
         font.pointSize: 14
@@ -94,8 +107,8 @@ Rectangle {
 
     Label {
         id: title
-        x: 806
-        y: 225
+        x: 772
+        y: 221
         color: "#273c30"
         text: qsTr("Random Forest")
         font.family: "Verdana"
