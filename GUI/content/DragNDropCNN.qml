@@ -19,6 +19,24 @@ Item {
         width: 1928
         height: 1090
     }
+    
+    Image {
+        id: cnnTitle
+        x: 822
+        y: 297
+        width: 406
+        height: 182
+        source: "CNNTitle.png"
+    }
+
+    Image {
+        id: cnnSuperTitle
+        x: 297
+        y: -307
+        width: 1362
+        height: 896
+        source: "Title.png"
+    }
 
     Label {
         id: noEpochsLabel
@@ -232,7 +250,7 @@ Item {
                         id: startBlockDropRectangle
 
                         anchors.fill: parent
-                        opacity: 0.1
+                        opacity: 0.0
 
                         color: dragTarget.containsDrag ? "grey" : "yellow"
                     }
@@ -280,6 +298,27 @@ Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
+                }
+
+                property int rectX: 0
+                property int rectY: -200
+
+                Image {
+                    id: puzzle3
+                    x: parent.rectX-13
+                    y: parent.rectY+70
+                    width: 300
+                    height: 398
+                    source: "puzzleYellow.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Connections {
+                    target: parent.parent
+                    onPositionChanged: {
+                        parent.rectX = parent.x
+                        parent.rectY = parent.y
+                    }
                 }
 
                 color: root.colorKey
@@ -372,7 +411,7 @@ Item {
 
                 DropArea {
                     id: middleBlockDropArea1
-
+                    opacity: 0.0
                     width: 200
                     height: 100
                     keys: [ colorKey ]
@@ -411,6 +450,27 @@ Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
+                }
+
+                property int rectX: 0
+                property int rectY: -200
+
+                Image {
+                    id: puzzle4
+                    x: parent.rectX-13
+                    y: parent.rectY+70
+                    width: 300
+                    height: 398
+                    source: "puzzleBlue.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Connections {
+                    target: parent.parent
+                    onPositionChanged: {
+                        parent.rectX = parent.x
+                        parent.rectY = parent.y
+                    }
                 }
 
                 color: root.colorKey
@@ -507,7 +567,7 @@ Item {
                     width: 200
                     height: 100
                     keys: [ colorKey ]
-
+                    opacity: 0.0
                     anchors.left: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: undefined
@@ -542,6 +602,27 @@ Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
+                }
+
+                property int rectX: 0
+                property int rectY: -200
+
+                Image {
+                    id: puzzle2
+                    x: parent.rectX-13
+                    y: parent.rectY+70
+                    width: 300
+                    height: 398
+                    source: "puzzleRed.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Connections {
+                    target: parent.parent
+                    onPositionChanged: {
+                        parent.rectX = parent.x
+                        parent.rectY = parent.y
+                    }
                 }
 
                 color: root.colorKey
@@ -638,7 +719,7 @@ Item {
                     width: 200
                     height: 100
                     keys: [ colorKey ]
-
+                    opacity: 0.0
                     anchors.left: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: undefined
@@ -673,6 +754,27 @@ Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
+                }
+
+                property int rectX: 0
+                property int rectY: -200
+
+                Image {
+                    id: puzzle5
+                    x: parent.rectX-13
+                    y: parent.rectY+70
+                    width: 300
+                    height: 398
+                    source: "puzzleRed.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Connections {
+                    target: parent.parent
+                    onPositionChanged: {
+                        parent.rectX = parent.x
+                        parent.rectY = parent.y
+                    }
                 }
 
                 color: root.colorKey
@@ -769,7 +871,7 @@ Item {
                     width: 200
                     height: 100
                     keys: [ colorKey ]
-
+                    opacity: 0.0
                     anchors.left: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: undefined
@@ -805,6 +907,27 @@ Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
+                }
+
+                property int rectX: 0
+                property int rectY: -200
+
+                Image {
+                    id: puzzle6
+                    x: parent.rectX-13
+                    y: parent.rectY+70
+                    width: 300
+                    height: 398
+                    source: "puzzleBlue.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Connections {
+                    target: parent.parent
+                    onPositionChanged: {
+                        parent.rectX = parent.x
+                        parent.rectY = parent.y
+                    }
                 }
 
 
@@ -910,7 +1033,8 @@ Item {
 
                         anchors.fill: parent
 
-                        color: dragTarget.containsDrag ? "grey" : "yellow"
+                        //color: dragTarget.containsDrag ? "grey" : "yellow"
+                        opacity: 0.0
                     }
                 }
             }
@@ -957,6 +1081,27 @@ Item {
                     horizontalCenter: parent.horizontalCenter
                 }
 
+                property int rectX: 0
+                property int rectY: -200
+
+                Image {
+                    id: puzzleEnd
+                    x: parent.rectX-13
+                    y: parent.rectY+70
+                    width: 300
+                    height: 398
+                    source: "puzzleEnd.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                Connections {
+                    target: parent.parent
+                    onPositionChanged: {
+                        parent.rectX = parent.x
+                        parent.rectY = parent.y
+                    }
+                }
+
                 color: root.colorKey
 
                 Drag.keys: [ root.colorKey ]
@@ -973,6 +1118,8 @@ Item {
                         }
                     }
                 }
+
+
 
                 Label {
                     id: endBlockDropoutLabel
