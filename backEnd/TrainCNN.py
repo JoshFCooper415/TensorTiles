@@ -6,6 +6,7 @@ from ConvNet import ConvNetLayers
 from CIFAR10DataLoader import CIFAR10DataLoader
 from MNISTDataLoader import MNISTDataLoader
 from FasionMNISTDataLoader import FashionMNISTDataLoader
+from STLDataLoader import STLDataLoader
 
 class CNNTrainer:
     def __init__(self, layer_specs, hyper_parameters, dataset):
@@ -13,8 +14,6 @@ class CNNTrainer:
         self.hyper_parameters = hyper_parameters
         self.model = ConvNetLayers(self.layer_specs)
         self.model.initialize_fc(dataset)
-        
-
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.hyper_parameters.get("learning_rate"))
 
         if dataset == "CIFAR10":
@@ -27,20 +26,16 @@ class CNNTrainer:
             self.train_loader = self.mnist_data.get_trainloader()
             self.test_loader = self.mnist_data.get_testloader()
             self.classes = self.mnist_data.get_classes()
-        if dataset == "FasionMNIST":
+        if dataset == "FashionMNIST":
             self.fasion_data = FashionMNISTDataLoader()
             self.train_loader = self.fasion_data.get_trainloader()
             self.test_loader = self.fasion_data.get_testloader()
             self.classes = self.fasion_data.get_classes()
-        if dataset == "STL":
-            self.stl_data = FashionMNISTDataLoader()
-            self.train_loader = self.stl_data.get_trainloader()
-            self.test_loader = self.stl_data.get_testloader()
-            self.classes = self.stl_data.get_classes()
 
     def train(self):
         num_epochs = self.hyper_parameters.get("num_epochs")
         criterion = nn.CrossEntropyLoss()
+        acc_arr = []
         for epoch in range(num_epochs):
             # Training loop
             self.model.train()
@@ -73,5 +68,6 @@ class CNNTrainer:
 
             test_loss /= len(self.test_loader.dataset)
             accuracy = 100. * correct / len(self.test_loader.dataset)
-
+            acc_arr.append(accuracy)
             print(f"Test Epoch [{epoch+1}/{num_epochs}], Average Loss: {test_loss:.4f}, Accuracy: {accuracy:.2f}%")
+        #return acc_arr

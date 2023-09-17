@@ -31,8 +31,10 @@ class ModelRunner:
         model = Regressions(params)
         if dataset == "paris":
             model.load_and_prepare_paris_data()
-        elif dataset == "new":
-            model.load_and_prepare_new_data()
+        elif dataset == "boston":
+            model.load_and_prepare_boston_data()
+        elif dataset == "insurance":
+            model.load_and_prepare_insurance_data
         if modelType == 'regression':
             model.train_model_regression()
             print(model.evaluate_model())
@@ -49,6 +51,7 @@ class ModelRunner:
         hyper_parameters = {'learning_rate': 0.001, 'num_epochs': 10}'''
 
         cnn_trainer = CNNTrainer(args[1], args[2], args[3])
+        #return 
         cnn_trainer.train()
 
 
@@ -60,8 +63,8 @@ if __name__ == '__main__':
             {'in_channels': 3, 'out_channels': 64, 'kernel_size': 5, 'use_bn': True, 'dropout_rate': 0.0}
             ],
             {'learning_rate': 1e-4, 'num_epochs': 10},
-            "AudioMNIST"]
+            ""]
     
     runner = ModelRunner(args)
-    
     runner.run()
+    #print(f'top acc {runner.run()}')
