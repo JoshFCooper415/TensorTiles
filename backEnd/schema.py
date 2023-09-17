@@ -48,3 +48,6 @@ class TrainingData(BaseModel):
 class ServerCommand(BaseModel):
     command: str
     parameters: dict
+
+class Image(BaseModel):
+    format: str

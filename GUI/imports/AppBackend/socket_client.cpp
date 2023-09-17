@@ -8,6 +8,8 @@
 #include <vector>
 #include <cstdlib>
 #include <sstream>
+#include <fstream>
+#include <iomanip>
 
 int clientSocket; // Declare a global client socket for connection
 
@@ -177,6 +179,89 @@ void sendAIConfigurationsSchema(
 
     sendValidJSONToServer(validJSONString);
 }
+
+std::string readImageFile(const std::string& imagePath) {
+    std::ifstream imageFile(imagePath, std::ios::binary);
+    if (!imageFile) {
+        std::cerr << "Error: Could not open image file" << std::endl;
+        return "";
+    }
+
+    // Read the image file into a string buffer
+    std::string imageBuffer((std::istreambuf_iterator<char>(imageFile)), std::istreambuf_iterator<char>());
+    return imageBuffer;
+}
+
+void sendImageToServer(const std::string& imagePath) {
+    // Read the image file as binary data
+    std::string imageBuffer = readImageFile(imagePath);
+
+    if (imageBuffer.empty()) {
+        return; // Handle the error as needed
+    }
+
+    // Encode the image data as base64
+    std::string base64ImageData = base64Encode(imageBuffer);
+
+    // Construct your JSON data including the image
+    std::string jsonData =
+        "{"
+        "\"schemaType\": \"ImageSchema\","
+        "\"image\": {"
+        "\"format\": \"JPEG\","
+        "\"data\": \"" + base64ImageData + "\""
+        "}"
+        "}";
+
+    // Send the JSON data to the server
+    sendValidJSONToServer(jsonData);
+}
+
+std::string base64Encode(const std::string& data) {
+    static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    std::string encoded;
+    int i = 0;
+    int j = 0;
+    uint8_t char_array_3[3];
+    uint8_t char_array_4[4];
+
+    for (char c : data) {
+        char_array_3[i++] = static_cast<uint8_t>(c);
+        if (i == 3) {
+            char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
+            char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
+            char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
+            char_array_4[3] = char_array_3[2] & 0x3f;
+
+            for (i = 0; i < 4; i++) {
+                encoded += base64_chars[char_array_4[i]];
+            }
+            i = 0;
+        }
+    }
+
+    if (i > 0) {
+        for (j = i; j < 3; j++) {
+            char_array_3[j] = 0;
+        }
+
+        char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
+        char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
+        char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
+
+        for (j = 0; j < i + 1; j++) {
+            encoded += base64_chars[char_array_4[j]];
+        }
+
+        while (i++ < 3) {
+            encoded += '=';
+        }
+    }
+
+    return encoded;
+}
+
+
 
 int main() {
     // Call the functions to send different schema types to the server
