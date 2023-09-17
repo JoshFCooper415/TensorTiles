@@ -14,18 +14,17 @@ Next if you selected Random Forest or Linear Regression you can choose your hype
 
 If instead you selected CNN you can choose values for your hyperparameters and for each block, then drag-and-drop them into place!
 
-[PUT THE CNN IMAGE HERE]
+![alt text](https://cdn.discordapp.com/attachments/1152384475125272616/1152839522095222784/image.png)
 
 #### Step 3:
 Train you model:
 Just click run!
 
-[PUT THE TRAINING IMAGE HERE]
-
 training can take a while so be patient, your model is training.
 
 #### Step 4:
 Upload an image or enter text to get insight from your model.
+![Alt text](https://cdn.discordapp.com/attachments/1152384475125272616/1152841613857538058/image.png)
 
 #### Step 5:
 Expirement, machine learning requires a lot of testing to see what works so don't settle for the first training run!
