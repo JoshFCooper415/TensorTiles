@@ -14,6 +14,9 @@ Rectangle {
     id: rectangle
     width: Constants.width
     height: Constants.height
+    property bool isDone: false
+    property int depth: 1;
+    property int estimators: 100;
 
     color: Constants.backgroundColor
 
@@ -101,6 +104,7 @@ Rectangle {
         snapMode: RangeSlider.SnapOnRelease
         orientation: Qt.Vertical
         value: 0.5
+        onMoved: depth = sizeTree.value
     }
 
     Slider {
@@ -113,6 +117,7 @@ Rectangle {
         snapMode: RangeSlider.SnapOnRelease
         to: 5000
         from: 1
+        onMoved: esitmators = numTrees.value;
     }
 
     Label {
