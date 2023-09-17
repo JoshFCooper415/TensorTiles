@@ -7,7 +7,7 @@ import torch
 
 # Variable to track the server's running state
 server_running = True
-runner = ModelRunner.ModelRunner(None)
+runner = ModelRunner
     
 def receive_variable_length_json(client_socket):
     try:
