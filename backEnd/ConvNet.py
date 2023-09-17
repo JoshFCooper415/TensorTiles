@@ -59,8 +59,7 @@ class ConvNetLayers(nn.Module):
         dataset_to_shape = {
         "CIFAR10": (3, 32, 32),
         "MNIST": (1, 28, 28),
-        "FashionMNIST": (1, 28, 28),
-        "STL10": (3, 96, 96)
+        "FashionMNIST": (1, 28, 28)
     }
 
     

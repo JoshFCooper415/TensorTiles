@@ -95,7 +95,7 @@ Window {
             Connections {
                 target: convNet
                 onIsDoneChanged: {
-                    backend.doStuff(convNet.array.join(";"))
+                    backend.doStuff(convNet.array.join(";"), chooseModelTab.model, chooseModelTab.dataset, convNet.epochs, convNet.learningRate)
 //                    console.log(convNet.array.join(";"))
                     stackView.currentIndex = 4
                 }

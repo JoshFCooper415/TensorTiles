@@ -27,7 +27,32 @@ class Regressions:
         
         # Target variable
         self.y = self.df[self.params.get('target')]
-
+    
+    def load_and_prepare_boston_data(self):
+        # No need to extract from a ZIP file for this dataset
+        # Load the CSV file directly from the URL into a pandas DataFrame
+        url = 'https://raw.githubusercontent.com/selva86/datasets/master/BostonHousing.csv'
+        self.df = pd.read_csv(url)
+        
+        # Feature matrix
+        self.X = self.df.drop(self.params.get('target'), axis=1)
+        for feature in self.params.get('dropedFeatures'):
+            self.X = self.X.drop(feature, axis=1)
+        
+        # Target variable
+        self.y = self.df[self.params.get('target')]
+    def load_and_prepare_insurance_data(self):
+        # Load the CSV file directly from the URL into a pandas DataFrame
+        url = 'https://raw.githubusercontent.com/stedy/Machine-Learning-with-R-datasets/master/insurance.csv'
+        self.df = pd.read_csv(url)
+        
+        # Feature matrix
+        self.X = self.df.drop(self.params.get('target'), axis=1)
+        for feature in self.params.get('dropedFeatures'):
+            self.X = self.X.drop(feature, axis=1)
+        
+        # Target variable
+        self.y = self.df[self.params.get('target')]    
     def train_model_regression(self):
         # Initialize and prepare data for the CatBoost model
         self.catboost_model = CatBoostRegression(self.params)
