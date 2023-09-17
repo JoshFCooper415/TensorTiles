@@ -96,8 +96,8 @@ void sendMLModelSchema(
         "\"hyper_parameters\": {"
         "\"learning_rate\": " + std::to_string(learning_rate) + ","
         "\"num_epochs\": " + std::to_string(num_epochs) +
-        "},"
-        "\"data_set\": \"" + data_set + "\"" +  // Include the data_set field
+//        "},"
+//        "\"data_set\": \"" + data_set + "\"" +  // Include the data_set field
         "}";
     
     std::string validJSONString =

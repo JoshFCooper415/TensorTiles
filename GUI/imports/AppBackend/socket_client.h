@@ -19,7 +19,8 @@ void sendValidJSONToServer(const std::string& validJSONString);
 void sendMLModelSchema(
     int in_channels, int out_channels, int kernel_size,
     bool use_bn, double dropout_rate,
-    double learning_rate, int num_epochs, std::string& data_set);
+    double learning_rate, int num_epochs, const std::string& data_set
+    );
 void sendAIConfigurationsSchema(
     const std::string& argType,
     double learning_rate, int depth, int n_estimators,
@@ -31,6 +32,6 @@ void sendServerCommand(
     const std::string& command,
     const std::string& parameters
     );
-int main();
 std::string base64Encode(const std::string &data);
+int main();
 #endif // SOCKET_CLIENT_H
