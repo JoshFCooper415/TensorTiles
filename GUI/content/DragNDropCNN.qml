@@ -12,6 +12,14 @@ Item {
     width: 1920
     height: 1080
 
+    Rectangle {
+        x: 0
+        y: -10
+        color: "grey"
+        width: 1928
+        height: 1090
+    }
+
     Label {
         id: noEpochsLabel
         anchors.left: parent.left
@@ -61,6 +69,16 @@ Item {
 
                 color: dragTarget.containsDrag ? "grey" : colorKey
             }
+
+            Image {
+                id: puzzleStart
+                x: -365
+                y: -81
+                width: 814
+                height: 561
+                source: "puzzleStart.png"
+            }
+
         }
     }
 
@@ -91,6 +109,28 @@ Item {
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
+                }
+
+                property int rectX: 0
+                property int rectY: -200
+
+                Image {
+                    id: puzzle1
+                    x: container.rectX
+                    y: container.rectY - 200
+                    width: 300
+                    height: 398
+                    source: "puzzleRed.png"
+                    fillMode: Image.PreserveAspectFit
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    drag.target: container
+                    onPositionChanged: {
+                        container.rectX = container.x
+                        container.rectY = container.y
+                    }
                 }
 
                 color: root.colorKey
@@ -196,6 +236,7 @@ Item {
                         id: startBlockDropRectangle
 
                         anchors.fill: parent
+                        opacity: 0.1
 
                         color: dragTarget.containsDrag ? "grey" : "yellow"
                     }
@@ -764,12 +805,12 @@ Item {
 
                 width: 200
                 height: 150
+                color: "#aa55ff"
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
                 }
 
-                color: root.colorKey
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea5.drag.active
