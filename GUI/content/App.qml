@@ -86,7 +86,10 @@ Window {
         RandomForest {
             id: randomForest
 
-            onIsDoneChanged: backend.sendAIConfigurations(0.002, randomForest.depth, randomForest.estimators, "hasPool", "", "random forest", "paris")
+            onIsDoneChanged: {
+                backend.sendAIConfigurations(0.002, randomForest.depth, randomForest.estimators, "hasPool", "", "random forest", "paris")
+                stackView.currentIndex = 4
+            }
 
         }
         //index 2 - CNN
@@ -106,6 +109,10 @@ Window {
         // index 3 - Regression
         Regression {
             id: regression
+            onIsDoneChanged: {
+                backend.sendAIConfigurations(0.002, regression.depth, regression.estimators, "price", "", "regression", "paris")
+                stackView.currentIndex = 4
+            }
         }
 
         RunScreen {

@@ -119,6 +119,7 @@ void AppBackend::sendAIConfigurations(const double learningRate, const int depth
 
     // Call sendAIConfigurationsSchema with the converted parameters
     sendAIConfigurationsSchema(argTypeStr, learningRate, depth, n_estimators, targetStr, droppedFeaturesVec, specificTypeStr, dataSetStr);
+    sendServerCommand("start-training", "{}");
 }
 
 

@@ -1,6 +1,7 @@
 import socket
 import json
 from pydantic import ValidationError
+from typing import List
 from PIL import Image
 from io import BytesIO
 import schema
@@ -11,7 +12,7 @@ import os
 
 # Variable to track the server's running state
 server_running = True
-runner = ModelRunner
+runner = None
 
 
 def receive_variable_length_json(client_socket):
@@ -103,7 +104,8 @@ def validate_and_process_data(data):
                 else:
                     response = "Not a Valid ServerCommand"
             elif isinstance(parsed_data, schema.AIConfigurations):
-                runner = ModelRunner.ModelRunner(parsed_data.args)
+                runner = ModelRunner.ModelRunner([parsed_data.args[0], {"learning_rate": parsed_data.args[1].learning_rate, "depth": parsed_data.args[1].depth,
+                                                 "n_estimators": parsed_data.args[1].n_estimators, "target": parsed_data.args[1].target, "dropedFeatures": list(parsed_data.args[1].dropedFeatures)}, "paris"])
                 response = f"Received and trusted {expected_schema.__name__} data\n"
             elif isinstance(parsed_data, schema.TrainingData):
                 response = runner.args['num_epochs']
