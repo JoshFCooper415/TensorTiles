@@ -22,5 +22,15 @@ qt6_add_qml_module(content
         "Untitled_Artwork (3).png"
         "Untitled_Artwork (4).png"
         Title.png
+        puzzleRed.png
+        puzzleStart.png
+        Themed_Chameleon.png
+        sizeTrees.png
+        numTrees.png
+        randForestTitle.png
+        puzzleEnd.png
+        puzzleBlue.png
+        puzzleYellow.png
+        CNNTitle.png
         QML_FILES RunScreen.ui.qml
 )
