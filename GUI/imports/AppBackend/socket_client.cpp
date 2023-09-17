@@ -198,7 +198,7 @@ void sendImageToServer(const std::string& imagePath) {
     // Construct your JSON data including the image
     std::string jsonData =
         "{"
-        "\"schemaType\": \"ImageSchema\","
+        "\"schemaType\": \"Image\","
         "\"image\": {"
         "\"format\": \"JPEG\","
         "\"data\": \"" + base64ImageData + "\""

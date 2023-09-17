@@ -51,3 +51,4 @@ class ServerCommand(BaseModel):
 
 class Image(BaseModel):
     format: str
+    data: str
