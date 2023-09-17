@@ -28,4 +28,4 @@ training can take a while so be patient, your model is training.
 Upload an image or enter text to get insight from your model.
 
 #### Step 5:
-Expirement, machine learning requires alot of testing to see what works so don't settle for the first training run!
+Expirement, machine learning requires a lot of testing to see what works so don't settle for the first training run!
