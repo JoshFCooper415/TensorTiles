@@ -6,7 +6,7 @@ Grid {
     width: 450
     height: 500
 
-    property string selected: "handNumbers";
+    property string selected: "MNIST";
 
     Label {
         id: modelSelectLabel
@@ -23,7 +23,7 @@ Grid {
         id: handwrittenNumbersSelected
         width: 450
         height: 50
-        text: qsTr("Handwritten Numbers")
+        text: qsTr("Handwritten Numbers (CNN)")
         anchors.top: modelSelectLabel.bottom
         autoRepeat: false
         checked: true
@@ -32,7 +32,7 @@ Grid {
 
         Connections {
             target: handwrittenNumbersSelected
-            onClicked: selected = "handNumbers"
+            onClicked: selected = "MNIST"
         }
     }
 
@@ -40,13 +40,13 @@ Grid {
         id: handwrittenShapesSelected
         width: 450
         height: 50
-        text: qsTr("Clothing Pictures")
+        text: qsTr("Clothing Pictures (CNN)")
         anchors.top: handwrittenNumbersSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: handwrittenShapesSelected
-            onClicked: selected = "handShapes"
+            onClicked: selected = "clothing"
         }
     }
 
@@ -54,13 +54,13 @@ Grid {
         id: crayonColorsSelected
         width: 450
         height: 50
-        text: qsTr("Basic Images")
+        text: qsTr("Basic Images (CNN)")
         anchors.top: handwrittenShapesSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: crayonColorsSelected
-            onClicked: selected = "crayon"
+            onClicked: selected = "basic"
         }
     }
 
@@ -68,13 +68,13 @@ Grid {
         id: realEstateSelected
         width: 450
         height: 50
-        text: qsTr("Boston Real Estate")
+        text: qsTr("Boston Real Estate (Regression/Random Forest)")
         anchors.top: crayonColorsSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: realEstateSelected
-            onClicked: selected = "realEstate"
+            onClicked: selected = "brealEstate"
         }
     }
 
@@ -82,13 +82,13 @@ Grid {
         id: financeSelected
         width: 450
         height: 50
-        text: qsTr("Paris Real Estate")
+        text: qsTr("Paris Real Estate (Regression/Random Forest)")
         anchors.top: realEstateSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: financeSelected
-            onClicked: selected = "finance"
+            onClicked: selected = "prealestate"
         }
     }
 
@@ -96,13 +96,13 @@ Grid {
         id: spectographSelected
         width: 450
         height: 50
-        text: qsTr("Insurance")
+        text: qsTr("Insurance (Regression/Random Forest)")
         anchors.top: financeSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: spectographSelected
-            onClicked: selected = "spectograph"
+            onClicked: selected = "insurance"
         }
     }
 

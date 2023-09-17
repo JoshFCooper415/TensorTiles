@@ -16,6 +16,7 @@ qt6_add_qml_module(content
         QML_FILES DragNDropCNN.qml
         QML_FILES RandomForest.ui.qml
         QML_FILES Regression.ui.qml
+        QML_FILES Inference.ui.qml
         Untitled_Artwork.png
         "Untitled_Artwork (1).png"
         "Untitled_Artwork (2).png"
@@ -33,4 +34,5 @@ qt6_add_qml_module(content
         puzzleYellow.png
         CNNTitle.png
         QML_FILES RunScreen.ui.qml
+        Inference.png
 )

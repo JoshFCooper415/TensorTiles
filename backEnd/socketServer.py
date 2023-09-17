@@ -1,12 +1,15 @@
 import socket
 import json
 from pydantic import ValidationError
-from schema import MLModel, TrainingModelConfig, AIConfigurations, ServerCommand, Image, Text
+import schema
+import ModelRunner
+import torch
 
 # Variable to track the server's running state
 server_running = True
+runner = ModelRunner
 
-    
+
 def receive_variable_length_json(client_socket):
     try:
         # Set the socket to non-blocking mode
@@ -15,7 +18,8 @@ def receive_variable_length_json(client_socket):
         buffer = b""
         while True:
             try:
-                data = client_socket.recv(2048)
+                data = client_socket.recv(4096)
+                print(data)
                 if not data:
                     break
 
@@ -25,8 +29,8 @@ def receive_variable_length_json(client_socket):
                 try:
                     json_data = json.loads(buffer.decode())
                     return json_data
-                except ValueError:
-                    continue
+                except ValueError as e:
+                    print("ValueError: ", e)
             except BlockingIOError:
                 pass
 
@@ -34,25 +38,32 @@ def receive_variable_length_json(client_socket):
         print(f"Error in receive_variable_length_json: {str(e)}")
         # Handle the error appropriately, e.g., close the socket gracefully
 
+
 def get_expected_schema(data) -> type:
     schema_type = data.get("schemaType")
     if schema_type == "MLModel":
-        return MLModel
+        return schema.MLModel
     elif schema_type == "TrainingModelConfig":
-        return TrainingModelConfig
+        return schema.TrainingModelConfig
     elif schema_type == "AIConfigurations":
-        return AIConfigurations
+        return schema.AIConfigurations
     elif schema_type == "ServerCommand":
-        return ServerCommand
+        return schema.ServerCommand
     elif schema_type == "Image":
-        return Image
+        return schema.Image
     elif schema_type == "Text":
-        return Text
+        return schema.Text
+    elif schema_type == "LoseData":
+        return schema.LossData
+    elif schema_type == schema_type.TrainingData:
+        return schema.TrainingData
     else:
         raise ValueError(f"Received unrecognized schemaType: {schema_type}")
 
 
 def validate_and_process_data(data):
+    global runner
+    response = "This is an empty string"
     try:
 
         expected_schema = get_expected_schema(data)
@@ -63,16 +74,35 @@ def validate_and_process_data(data):
             parsed_data = expected_schema.parse_obj(json_data)
             print(f"Received and trusted {expected_schema.__name__} data:")
             print(parsed_data.dict())
-            response = f"Received and trusted {expected_schema.__name__} data\n"
+            if isinstance(parsed_data, schema.MLModel):
+                runner = ModelRunner.ModelRunner(
+                    ["CNN", parsed_data.layer_specs, parsed_data.hyper_parameters, parsed_data.data_set])
+                response = f"Received and trusted {expected_schema.__name__} data\n"
+            elif isinstance(parsed_data, schema.Image):
+                response = runner.inference(schema.Image.data)
+            elif isinstance(parsed_data, schema.ServerCommand):
+                if parsed_data.command == "stopserver":
+                    server_running = False
+                    response = "Server stopping..."
+                elif parsed_data.command == "start-training":
+                    response = "[" + ','.join(runner.run()) + "]"
+                else:
+                    response = "Not a Valid ServerCommand"
+
+            elif isinstance(parsed_data, schema.TrainingData):
+                response = runner.args['num_epochs']
+            elif isinstance(parsed_data, schema.LossData):
+                runner.model.evaluate_model()
+                response = runner.model.acc_arr
+
         except ValidationError as e:
             print(f"Validation error: {e}")
             response = f"Invalid {expected_schema.__name__} data\n"
 
-        return parsed_data, response.encode()
+        return response.encode()
     except Exception as e:
         print(f"Error: {str(e)}")
         return None, b"Error\n"
-
 
 
 def start_server():
@@ -92,8 +122,8 @@ def start_server():
             json_data = receive_variable_length_json(client_socket)
             if json_data is not None:
                 response = validate_and_process_data(json_data)
-                if not isinstance(response, tuple):
-                    client_socket.send("IT DIDNT WORK")
+                if isinstance(response, tuple):
+                    client_socket.send(b"IT DIDNT WORK")
 
             client_socket.close()
             print("Client socket closed.")
@@ -103,6 +133,7 @@ def start_server():
     finally:
         server_socket.close()
         print("Server socket closed.")
+
 
 if __name__ == "__main__":
     start_server()

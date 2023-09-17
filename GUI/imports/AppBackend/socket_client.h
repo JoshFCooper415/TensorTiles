@@ -17,9 +17,9 @@ std::string receiveServerResponse();
 void disconnectFromServer();
 void sendValidJSONToServer(const std::string& validJSONString);
 void sendMLModelSchema(
-    int in_channels, int out_channels, int kernel_size,
-    bool use_bn, double dropout_rate,
-    double learning_rate, int num_epochs
+    int *in_channels, int *out_channels, int *kernel_size,
+    bool *use_bn, double *dropout_rate,
+    double learning_rate, int num_epochs, const std::string& data_set, int argc
     );
 void sendAIConfigurationsSchema(
     const std::string& argType,
@@ -32,6 +32,6 @@ void sendServerCommand(
     const std::string& command,
     const std::string& parameters
     );
-int main();
 std::string base64Encode(const std::string &data);
+int main();
 #endif // SOCKET_CLIENT_H

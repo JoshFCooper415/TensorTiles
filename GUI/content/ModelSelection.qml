@@ -43,6 +43,7 @@ Grid {
         text: qsTr("Random Forest")
         anchors.top: cnnSelected.bottom
         anchors.topMargin: 80
+        anchors.topMargin: 80
 
         Connections {
             target: randomForestSelected
@@ -51,18 +52,16 @@ Grid {
     }
 
     RadioButton {
-        id: transformerSelected
+        id: regressionSelected
         width: 450
         height: 50
         text: qsTr("Regression")
         anchors.top: randomForestSelected.bottom
-        anchors.topMargin: 80
+        anchors.topMargin: 90
 
         Connections {
-            target: transformerSelected
-            onClicked: selected = "transformer"
+            target: regressionSelected
+            onClicked: selected = "regression"
         }
     }
-
-
 }

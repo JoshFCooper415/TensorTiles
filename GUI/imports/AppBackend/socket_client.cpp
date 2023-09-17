@@ -40,14 +40,14 @@ void sendJSONMessage(const char* messageJson) {
 std::string receiveServerResponse() {
     char buffer[1024];
     memset(buffer, 0, sizeof(buffer));
-    
+
     // Receive the server's response
     int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
     if (bytesRead <= 0) {
         std::cerr << "Error: Failed to receive server response" << std::endl;
         return "";
     }
-    
+
     // Handle the server's response here (e.g., print it)
     std::cout << "Server response: " << buffer << std::endl;
     return buffer;
@@ -69,8 +69,8 @@ void sendValidJSONToServer(const std::string& validJSONString) {
     // Send the validJSON message to the server using sendJSONMessage function
     if (connectToServer("127.0.0.1", 8080)) {
         sendJSONMessage(validJSON_cstr);
-        receiveServerResponse(); 
-        
+        receiveServerResponse();
+
         // Call the function to disconnect from the server
         disconnectFromServer();
     }
@@ -78,34 +78,48 @@ void sendValidJSONToServer(const std::string& validJSONString) {
 
 // Function to configure and send MLModel schema
 void sendMLModelSchema(
-    int in_channels, int out_channels, int kernel_size,
-    bool use_bn, double dropout_rate,
-    double learning_rate, int num_epochs
+    int* in_channels, int* out_channels, int* kernel_size,
+    bool* use_bn, double* dropout_rate,
+    double learning_rate, int num_epochs,
+    const std::string& data_set, int argc
 ) {
     std::string schemaType = "MLModel";
     std::string jsonData =
         "{"
-        "\"layer_specs\": {"
-        "\"in_channels\": " + std::to_string(in_channels) + ","
-        "\"out_channels\": " + std::to_string(out_channels) + ","
-        "\"kernel_size\": " + std::to_string(kernel_size) + ","
-        "\"use_bn\": " + (use_bn ? "true" : "false") + ","
-        "\"dropout_rate\": " + std::to_string(dropout_rate) +
-        "},"
-        "\"hyper_parameters\": {"
+        "\"layer_specs\":"
+        "[";
+
+    for (int i = 0; i < argc; i++) {
+        jsonData.append("{\"in_channels\": " + std::to_string(in_channels[i]) + ",");
+        jsonData.append("\"out_channels\": " + std::to_string(out_channels[i]) + ",");
+        jsonData.append("\"kernel_size\": " + std::to_string(kernel_size[i]) + ",");
+        jsonData.append("\"use_bn\": ");
+        jsonData.append(use_bn[i] ? "true" : "false");
+        jsonData.append(",");
+        jsonData.append("\"dropout_rate\": " + std::to_string(dropout_rate[i]));
+        jsonData.append("},");
+    }
+    jsonData = jsonData.substr(0, jsonData.length()-1);
+    jsonData.append("],");
+
+
+
+    jsonData.append("\"hyper_parameters\": {"
         "\"learning_rate\": " + std::to_string(learning_rate) + ","
         "\"num_epochs\": " + std::to_string(num_epochs) +
-        "}"
-        "}";
-    
+        "},"
+        "\"data_set\": \"" + data_set + "\"" + "}");
+
+
     std::string validJSONString =
         "{"
         "\"schemaType\": \"" + schemaType + "\","
         "\"JSON_data\": " + jsonData +
         "}";
-    
+
     sendValidJSONToServer(validJSONString);
 }
+
 
 // Function to create and send a ServerCommand JSON
 void sendServerCommand(
@@ -268,12 +282,90 @@ void sendTextSchema(const std::string& textData) {
     sendValidJSONToServer(jsonData);
 }
 
-int main() {
-    // Call the functions to send different schema types to the server
-    sendMLModelSchema(64, 128, 3, true, 0.2, 0.001, 100);
-    std::vector<std::string> droppedFeatures = {"feature1", "feature2"};
-    sendAIConfigurationsSchema("Regression", 0.001, 10, 100, "output", droppedFeatures, "random forest", "data set");
-    sendServerCommand("train_ml_model", "{\"model_type\": \"CNN\", \"epochs\": 10, \"learning_rate\": 0.001}");
+// Function to receive LossData: Send the Schema anyways it doesnt do anything
+int sendLossDataSchema(const std::vector<double>& lossData) {
+    std::string schemaType = "LossData";
 
+    std::stringstream lossJson;
+    lossJson << "{";
+    lossJson << "\"data\": [";
+    for (size_t i = 0; i < lossData.size(); ++i) {
+        lossJson << lossData[i];
+        if (i < lossData.size() - 1) {
+            lossJson << ",";
+        }
+    }
+    lossJson << "]";
+    lossJson << "}";
+
+    std::string validJSONString =
+        "{"
+        "\"schemaType\": \"" + schemaType + "\","
+        "\"JSON_data\": " + lossJson.str() +
+        "}";
+
+    sendValidJSONToServer(validJSONString);
+
+    // Receive and store the integer response from LossData
+    std::string response = receiveServerResponse();
+    int lossResponse = std::stoi(response);
+    return lossResponse;
+}
+
+// Function to receive TrainingData (List or Dict)
+// NEED TO CALL SERVERCOMMAND WITH START TRAINING
+std::vector<double> startTrainingGetData(int numberOfEpochs) {
+    std::string schemaType = "TrainingData";
+    std::string jsonData =
+        "{"
+        "\"numberOfEpochs\": " + std::to_string(numberOfEpochs) +
+        "}";
+
+    std::string validJSONString =
+        "{"
+        "\"schemaType\": \"" + schemaType + "\","
+        "\"JSON_data\": " + jsonData +
+        "}";
+
+    sendValidJSONToServer(validJSONString);
+
+    // Receive and store the vector response from TrainingData
+    std::string response = receiveServerResponse();
+    std::vector<double> trainingResponse;
+
+    // Parse the received response (assumes it's a JSON array of numbers)
+    std::istringstream iss(response);
+    double value;
+    while (iss >> value) {
+        trainingResponse.push_back(value);
+        if (iss.peek() == ',') {
+            iss.ignore();
+        }
+    }
+
+    return trainingResponse;
+}
+
+
+// Function to send text data
+void sendTextData(const std::string& textData) {
+    std::string schemaType = "Text";
+
+    std::string jsonData =
+        "{"
+        "\"text\": \"" + textData + "\""
+        "}";
+
+    std::string validJSONString =
+        "{"
+        "\"schemaType\": \"" + schemaType + "\","
+        "\"JSON_data\": " + jsonData +
+        "}";
+
+    sendValidJSONToServer(validJSONString);
+}
+
+
+int main() {
     return 0;
 }
