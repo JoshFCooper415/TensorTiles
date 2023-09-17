@@ -1,9 +1,13 @@
 import socket
 import json
 from pydantic import ValidationError
+from PIL import Image
+from io import BytesIO
 import schema
 import ModelRunner
 import torch
+import base64
+import os
 
 # Variable to track the server's running state
 server_running = True
@@ -79,7 +83,17 @@ def validate_and_process_data(data):
                     ["CNN", parsed_data.layer_specs, parsed_data.hyper_parameters, parsed_data.data_set])
                 response = f"Received and trusted {expected_schema.__name__} data\n"
             elif isinstance(parsed_data, schema.Image):
-                response = runner.inference(schema.Image.data)
+                # Decode the base64-encoded image data
+                image_data = base64.b64decode(parsed_data.image.data)
+                img_format = parsed_data.format
+
+                # Determine the directory where the server script is located
+                script_directory = os.path.dirname(os.path.abspath(__file__))
+                local_image_path = os.path.join(script_directory, "image.png")
+                with open(local_image_path, "wb") as image_file:
+                    image_file.write(image_data)
+
+                response = runner.inference(local_image_path)
             elif isinstance(parsed_data, schema.ServerCommand):
                 if parsed_data.command == "stopserver":
                     server_running = False
