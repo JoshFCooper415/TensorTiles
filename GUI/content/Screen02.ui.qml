@@ -20,7 +20,7 @@ Rectangle {
         y: 0
         width: 24
         height: 1080
-        color: "#ed333b"
+        color: "#79949f"
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
@@ -76,5 +76,30 @@ Rectangle {
                 dataset = datasetSelection.selected
             }
         }
+    }
+
+    Image {
+        id: cnnLogo
+        x: 228
+        y: 194
+        width: 256
+        height: 316
+        source: "CNNlogo.png"
+    }
+    Image {
+        id: forestLogo
+        x: 137
+        y: 481
+        width: 439
+        height: 293
+        source: "forestLogo.png"
+    }
+    Image {
+        id: regLogo
+        x: 208
+        y: 795
+        width: 271
+        height: 251
+        source: "linearLogo.png"
     }
 }

@@ -56,7 +56,7 @@ Grid {
         height: 50
         text: qsTr("Regression")
         anchors.top: randomForestSelected.bottom
-        anchors.topMargin: 80
+        anchors.topMargin: 90
 
         Connections {
             target: regressionSelected
