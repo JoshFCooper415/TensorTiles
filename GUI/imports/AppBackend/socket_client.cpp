@@ -184,6 +184,7 @@ std::string readImageFile(const std::string& imagePath) {
     return imageBuffer;
 }
 
+
 void sendImageToServer(const std::string& imagePath) {
     // Read the image file as binary data
     std::string imageBuffer = readImageFile(imagePath);
@@ -253,7 +254,19 @@ std::string base64Encode(const std::string& data) {
     return encoded;
 }
 
+void sendTextSchema(const std::string& textData) {
+    std::string schemaType = "Text";
 
+    // Construct your JSON data including the text
+    std::string jsonData =
+        "{"
+        "\"schemaType\": \"" + schemaType + "\","
+        "\"text\": \"" + textData + "\""
+        "}";
+
+    // Send the JSON data to the server
+    sendValidJSONToServer(jsonData);
+}
 
 int main() {
     // Call the functions to send different schema types to the server
