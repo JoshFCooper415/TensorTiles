@@ -15,6 +15,7 @@ Item {
     Rectangle {
         x: 0
         y: -10
+        z: -100
         color: "grey"
         width: 1928
         height: 1090
@@ -22,8 +23,8 @@ Item {
     
     Image {
         id: cnnTitle
-        x: 822
-        y: 297
+        x: 100
+        y: 100
         width: 406
         height: 182
         source: "CNNTitle.png"
@@ -139,13 +140,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Connections {
-                    target: parent.parent
-                    onPositionChanged: {
-                        parent.rectX = parent.x
-                        parent.rectY = parent.y
-                    }
-                }
+//                Connections {
+//                    target: startBlock
+//                    onPositionChanged: {
+//                        startBlock.rectX = startBlockMouseArea.x
+//                        startBlock.rectY = startBlockMouseArea.y
+//                    }
+//                }
 
                 color: root.colorKey
 
@@ -313,13 +314,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Connections {
-                    target: parent.parent
-                    onPositionChanged: {
-                        parent.rectX = parent.x
-                        parent.rectY = parent.y
-                    }
-                }
+//                Connections {
+//                    target: parent.parent
+//                    onPositionChanged: {
+//                        parent.rectX = parent.x
+//                        parent.rectY = parent.y
+//                    }
+//                }
 
                 color: root.colorKey
 
@@ -465,13 +466,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Connections {
-                    target: parent.parent
-                    onPositionChanged: {
-                        parent.rectX = parent.x
-                        parent.rectY = parent.y
-                    }
-                }
+//                Connections {
+//                    target: middleBlockArea2
+//                    onPositionChanged: {
+//                        middleBlock2.rectX = middleBlockArea2.x
+//                        middleBlock2.rectY = middleBlockArea2.y
+//                    }
+//                }
 
                 color: root.colorKey
 
@@ -617,13 +618,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Connections {
-                    target: parent.parent
-                    onPositionChanged: {
-                        parent.rectX = parent.x
-                        parent.rectY = parent.y
-                    }
-                }
+//                Connections {
+//                    target: middleBlockArea3
+//                    onPositionChanged: {
+//                        middleBlock3.rectX = middleBlock3.x
+//                        middleBlock3.rectY = middleBlock3.y
+//                    }
+//                }
 
                 color: root.colorKey
 
@@ -769,13 +770,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Connections {
-                    target: parent.parent
-                    onPositionChanged: {
-                        parent.rectX = parent.x
-                        parent.rectY = parent.y
-                    }
-                }
+//                Connections {
+//                    target: parent.parent
+//                    onPositionChanged: {
+//                        parent.rectX = parent.x
+//                        parent.rectY = parent.y
+//                    }
+//                }
 
                 color: root.colorKey
 
@@ -922,13 +923,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Connections {
-                    target: parent.parent
-                    onPositionChanged: {
-                        parent.rectX = parent.x
-                        parent.rectY = parent.y
-                    }
-                }
+//                Connections {
+//                    target: parent.parent
+//                    onPositionChanged: {
+//                        parent.rectX = parent.x
+//                        parent.rectY = parent.y
+//                    }
+//                }
 
 
                 Drag.keys: [ root.colorKey ]
@@ -1094,13 +1095,13 @@ Item {
                     fillMode: Image.PreserveAspectFit
                 }
 
-                Connections {
-                    target: parent.parent
-                    onPositionChanged: {
-                        parent.rectX = parent.x
-                        parent.rectY = parent.y
-                    }
-                }
+//                Connections {
+//                    target: parent.parent
+//                    onPositionChanged: {
+//                        parent.rectX = parent.x
+//                        parent.rectY = parent.y
+//                    }
+//                }
 
                 color: root.colorKey
 

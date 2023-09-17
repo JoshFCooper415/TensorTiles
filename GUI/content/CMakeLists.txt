@@ -28,4 +28,8 @@ qt6_add_qml_module(content
         sizeTrees.png
         numTrees.png
         randForestTitle.png
+        puzzleEnd.png
+        puzzleBlue.png
+        puzzleYellow.png
+        CNNTitle.png
 )
