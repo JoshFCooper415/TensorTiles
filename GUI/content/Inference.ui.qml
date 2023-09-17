@@ -9,9 +9,9 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Dialogs
-import QtQuick.Dialogs
 
 Rectangle {
+    property string selectedImagePath: "";
     id: backGround
     width: 1920
     height: 1080
@@ -39,16 +39,14 @@ Rectangle {
         id: imageUpload
         title: "Select an Image to upload"
         nameFilters: ["Image (*.png)", "All Files (*)"]
-        var selectedImagePath = "hello"
-        onAccepted: selectedImagePath = FileDialog.fileUrl
+        onAccepted: selectedImagePath = imageUpload.fileUrl
     }
 
     FileDialog {
         id: fileUpload
         title: "Select an Dataset to upload"
         nameFilters: ["Text Files (*.txt *.csv)", "All Files (*)"]
-        var selectedImagePath = "hello"
-        onAccepted: selectedImagePath = FileDialog.fileUrl
+        onAccepted: selectedImagePath = fileUpload.fileUrl
     }
 
     Item {
