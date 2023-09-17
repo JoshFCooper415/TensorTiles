@@ -50,7 +50,14 @@ Item {
         height: 300
         x: 0
         y: 400
-
+        Image {
+            id: puzzleStart
+            x: -215
+            y: -80
+            width: 814
+            height: 561
+            source: "puzzleStart.png"
+        }
         DropArea {
             id: dragTarget
 
@@ -58,9 +65,9 @@ Item {
             height: 300
             keys: [ colorKey ]
 
-            anchors.right: parent.right
+            anchors.left: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            anchors.left: undefined
+            anchors.right: undefined
 
             Rectangle {
                 id: dropRectangle
@@ -69,16 +76,6 @@ Item {
 
                 color: dragTarget.containsDrag ? "grey" : colorKey
             }
-
-            Image {
-                id: puzzleStart
-                x: -365
-                y: -81
-                width: 814
-                height: 561
-                source: "puzzleStart.png"
-            }
-
         }
     }
 
@@ -116,20 +113,19 @@ Item {
 
                 Image {
                     id: puzzle1
-                    x: container.rectX
-                    y: container.rectY - 200
+                    x: parent.rectX-13
+                    y: parent.rectY+70
                     width: 300
                     height: 398
                     source: "puzzleRed.png"
                     fillMode: Image.PreserveAspectFit
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    drag.target: container
+                Connections {
+                    target: parent.parent
                     onPositionChanged: {
-                        container.rectX = container.x
-                        container.rectY = container.y
+                        parent.rectX = parent.x
+                        parent.rectY = parent.y
                     }
                 }
 
