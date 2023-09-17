@@ -1,12 +1,4 @@
-#include <iostream>
-#include <cstring>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <string>
-#include <vector>
-#include <cstdlib>
+#include "socket_client.h"
 #include <sstream>
 #include <fstream>
 #include <iomanip>
