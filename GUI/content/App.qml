@@ -124,11 +124,11 @@ Window {
 
         AppBackend {
             id: backend
+        }
 
-            Connections {
-                target: backend
-                onReadyChanged: runTab.done = backend.ready;
-            }
+        Connections {
+            target: backend
+            onReadyChanged: runTab.done = backend.ready;
         }
     }
 }
