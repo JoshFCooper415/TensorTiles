@@ -76,9 +76,25 @@ void AppBackend::doStuff(const QString data, const QString model, const QString 
     }
 
     std::string dset = dataset.toStdString();
-
-    for (const std::vector<double>& row : array2D) {
-        sendMLModelSchema(3, row[0], row[2], true, row[1], learningRate, noEpochs, dset);
+    int in_channels[array2D.size()];
+    in_channels[0] = 3;
+    int out_channels[array2D.size()];
+    bool use_bns[array2D.size()];
+    int kernel_sizes[array2D.size()];
+    double dropout_rates[array2D.size()];
+    for (int i = 0; i < array2D.size(); i++) {
+        std::vector<double> row = array2D.at(i);
+        if (i > 0) {
+            in_channels[i] = out_channels[i-1];
+        }
+        if (i < array2D.size()-1) {
+            out_channels[i] = row.at(0);
+        }
+        use_bns[i] = true;
+        kernel_sizes[i] = row.at(1);
+        dropout_rates[i] = row.at(2);
     }
-    sendServerCommand("train", model.toStdString());
+    out_channels[array2D.size()-1] = 32;
+    sendMLModelSchema(in_channels, out_channels, kernel_sizes, use_bns, dropout_rates, learningRate, noEpochs, dset, (int)array2D.size());
+    sendServerCommand("start-training", "{}");
 }

@@ -40,14 +40,14 @@ void sendJSONMessage(const char* messageJson) {
 std::string receiveServerResponse() {
     char buffer[1024];
     memset(buffer, 0, sizeof(buffer));
-    
+
     // Receive the server's response
     int bytesRead = recv(clientSocket, buffer, sizeof(buffer), 0);
     if (bytesRead <= 0) {
         std::cerr << "Error: Failed to receive server response" << std::endl;
         return "";
     }
-    
+
     // Handle the server's response here (e.g., print it)
     std::cout << "Server response: " << buffer << std::endl;
     return buffer;
@@ -69,8 +69,8 @@ void sendValidJSONToServer(const std::string& validJSONString) {
     // Send the validJSON message to the server using sendJSONMessage function
     if (connectToServer("127.0.0.1", 8080)) {
         sendJSONMessage(validJSON_cstr);
-        receiveServerResponse(); 
-        
+        receiveServerResponse();
+
         // Call the function to disconnect from the server
         disconnectFromServer();
     }
@@ -78,34 +78,45 @@ void sendValidJSONToServer(const std::string& validJSONString) {
 
 // Function to configure and send MLModel schema
 void sendMLModelSchema(
-    int in_channels, int out_channels, int kernel_size,
-    bool use_bn, double dropout_rate,
+    int* in_channels, int* out_channels, int* kernel_size,
+    bool* use_bn, double* dropout_rate,
     double learning_rate, int num_epochs,
-    const std::string& data_set  // Add the data_set parameter
+    const std::string& data_set, int argc
 ) {
     std::string schemaType = "MLModel";
     std::string jsonData =
         "{"
-        "\"layer_specs\": {"
-        "\"in_channels\": " + std::to_string(in_channels) + ","
-        "\"out_channels\": " + std::to_string(out_channels) + ","
-        "\"kernel_size\": " + std::to_string(kernel_size) + ","
-        "\"use_bn\": " + (use_bn ? "true" : "false") + ","
-        "\"dropout_rate\": " + std::to_string(dropout_rate) +
-        "},"
-        "\"hyper_parameters\": {"
+        "\"layer_specs\":"
+        "[";
+
+    for (int i = 0; i < argc; i++) {
+        jsonData.append("{\"in_channels\": " + std::to_string(in_channels[i]) + ",");
+        jsonData.append("\"out_channels\": " + std::to_string(out_channels[i]) + ",");
+        jsonData.append("\"kernel_size\": " + std::to_string(kernel_size[i]) + ",");
+        jsonData.append("\"use_bn\": ");
+        jsonData.append(use_bn[i] ? "true" : "false");
+        jsonData.append(",");
+        jsonData.append("\"dropout_rate\": " + std::to_string(dropout_rate[i]));
+        jsonData.append("},");
+    }
+    jsonData = jsonData.substr(0, jsonData.length()-1);
+    jsonData.append("],");
+
+
+
+    jsonData.append("\"hyper_parameters\": {"
         "\"learning_rate\": " + std::to_string(learning_rate) + ","
         "\"num_epochs\": " + std::to_string(num_epochs) +
-//        "},"
-//        "\"data_set\": \"" + data_set + "\"" +  // Include the data_set field
-        "}";
-    
+        "},"
+        "\"data_set\": \"" + data_set + "\"" + "}");
+
+
     std::string validJSONString =
         "{"
         "\"schemaType\": \"" + schemaType + "\","
         "\"JSON_data\": " + jsonData +
         "}";
-    
+
     sendValidJSONToServer(validJSONString);
 }
 
@@ -339,18 +350,18 @@ std::vector<double> startTrainingGetData(int numberOfEpochs) {
 // Function to send text data
 void sendTextData(const std::string& textData) {
     std::string schemaType = "Text";
-    
+
     std::string jsonData =
         "{"
         "\"text\": \"" + textData + "\""
         "}";
-    
+
     std::string validJSONString =
         "{"
         "\"schemaType\": \"" + schemaType + "\","
         "\"JSON_data\": " + jsonData +
         "}";
-    
+
     sendValidJSONToServer(validJSONString);
 }
 

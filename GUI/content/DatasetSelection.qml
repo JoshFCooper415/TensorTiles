@@ -6,7 +6,7 @@ Grid {
     width: 450
     height: 500
 
-    property string selected: "handNumbers";
+    property string selected: "MNIST";
 
     Label {
         id: modelSelectLabel
@@ -32,7 +32,7 @@ Grid {
 
         Connections {
             target: handwrittenNumbersSelected
-            onClicked: selected = "handNumbers"
+            onClicked: selected = "MNIST"
         }
     }
 
