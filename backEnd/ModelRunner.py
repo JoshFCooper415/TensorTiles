@@ -1,5 +1,6 @@
 from TrainReg import Regressions
 from TrainCNN import CNNTrainer
+import torch
 
 class ModelRunner:
     def __init__(self, args):
@@ -7,9 +8,9 @@ class ModelRunner:
 
     def run(self):
         if self.args[0] == "Regression":
-            self.run_regression_model()
+            return self.run_regression_model()
         elif self.args[0] == "CNN":
-            self.run_cnn_model()
+            return self.run_cnn_model()
         else:
             print("Invalid argument.")
 
@@ -28,19 +29,20 @@ class ModelRunner:
         modelType = self.args[2]
         dataset = self.args[3]
         # Initialize and run the model
-        model = Regressions(params)
+        self.model = Regressions(params)
         if dataset == "paris":
-            model.load_and_prepare_paris_data()
+            self.model.load_and_prepare_paris_data()
         elif dataset == "boston":
-            model.load_and_prepare_boston_data()
+            self.model.load_and_prepare_boston_data()
         elif dataset == "insurance":
-            model.load_and_prepare_insurance_data
+            self.model.load_and_prepare_insurance_data
+        print('training')
         if modelType == 'regression':
-            model.train_model_regression()
-            print(model.evaluate_model())
+            self.model.train_model_regression()
+            return self.model.evaluate_model()
         elif modelType == 'random forest':
-            model.train_model_random_forest()
-            print(model.evaluate_model())
+            self.model.train_model_random_forest()
+            return self.model.evaluate_model()
 
     def run_cnn_model(self):
         '''layer_specs = [
@@ -49,22 +51,30 @@ class ModelRunner:
             {'in_channels': 64, 'out_channels': 128, 'kernel_size': 3, 'use_bn': True, 'dropout_rate': 0.4}
         ]
         hyper_parameters = {'learning_rate': 0.001, 'num_epochs': 10}'''
-
-        cnn_trainer = CNNTrainer(args[1], args[2], args[3])
-        #return 
-        cnn_trainer.train()
+        if 'MNIST' in args[3]:
+            args[1][0]["in_channels"] = 1
+        self.model = CNNTrainer(args[1], args[2], args[3])
+        self.model.train()
+        return self.model.acc_arr
 
 
 if __name__ == '__main__':
-    #args = ["Regression",{'learning_rate': 0.00001,'depth': 10,'n_estimators': 100,'target': 'hasStorageRoom', 'dropedFeatures': []},'random forest','dataset']
+    #args = ["Regression",{'learning_rate': 0.00001,'depth': 10,'n_estimators': 100,'target': 'hasStorageRoom', 'dropedFeatures': []},'random forest','paris']
 
     args = ["CNN",
             [
-            {'in_channels': 3, 'out_channels': 64, 'kernel_size': 5, 'use_bn': True, 'dropout_rate': 0.0}
+            {'in_channels': 3, 'out_channels': 64, 'kernel_size': 5, 'use_bn': True, 'dropout_rate': 0.0},
             ],
-            {'learning_rate': 1e-4, 'num_epochs': 10},
-            ""]
-    
+            {'learning_rate': 1e-4, 'num_epochs': 1},
+            "MNIST"]
     runner = ModelRunner(args)
-    runner.run()
-    #print(f'top acc {runner.run()}')
+    #runner.run()
+    print(f'top acc {runner.run()}')
+    '''input_image = #torch.
+
+    # 4. Perform inference
+    with torch.no_grad():  # Deactivates autograd, reduces memory usage and speeds up computations
+        output = runner.model.model(input_image)
+
+    _, predicted_class = torch.max(output, 1)
+    print(f"Predicted class: {predicted_class.item()}")'''
