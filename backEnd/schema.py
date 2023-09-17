@@ -42,7 +42,13 @@ class AIConfigurations(BaseModel):
 class LossData(BaseModel):
     data: list
 
-
 class TrainingData(BaseModel):
     numberOfEpochs: int
     
+class ServerCommand(BaseModel):
+    command: str
+    parameters: dict
+
+class Image(BaseModel):
+    format: str
+    data: str

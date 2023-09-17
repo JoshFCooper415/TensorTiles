@@ -1,8 +1,5 @@
 #include "appbackend.h"
-#include <iostream>
-#include <string>
 #include <sstream>
-#include <vector>
 
 AppBackend::AppBackend(QObject *parent) :
     QObject(parent)
@@ -38,7 +35,7 @@ void AppBackend::setTest(const QString &test)
     emit testChanged();
 }
 
-void AppBackend::doStuff(const QString data) {
+void AppBackend::doStuff(const QString data, const QString model, const QString dataset, const int noEpochs, const double learningRate) {
     std::string input = data.toStdString();
 
     // Initialize a vector of vectors to store the 2D array.
@@ -75,4 +72,10 @@ void AppBackend::doStuff(const QString data) {
         }
         std::cout << '\n';
     }
+
+    for (const std::vector<double>& row : array2D) {
+        sendMLModelSchema(3, row[0], row[2], true, row[1], learningRate, noEpochs);
+    }
+    std::cout << learningRate << std::endl;
+    sendServerCommand("train", model.toStdString());
 }

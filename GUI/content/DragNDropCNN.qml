@@ -8,6 +8,8 @@ Item {
     required property int modelData
     property bool isDone: false;
     property var array: [];
+    property int epochs: 5;
+    property double learningRate: 0.007;
 
     width: 1920
     height: 1080
@@ -32,6 +34,51 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.right
             anchors.leftMargin: 15
+
+            Connections {
+                target: noEpochs
+                onValueModified: epochs = noEpochs.value
+            }
+        }
+    }
+
+    Label {
+        id: learningRateLabel
+        anchors.left: parent.left
+        anchors.bottom: noEpochsLabel.top
+        anchors.bottomMargin: 15
+        anchors.leftMargin: 15
+        color: "#273c30"
+        text: qsTr("Learning Rate: ")
+        font.family: "Verdana"
+        font.pointSize: 12
+        anchors.topMargin: 10
+
+        Slider {
+            id: learningRateSelector
+            value: 0.007
+            from: 0.002
+            to: 0.01
+            stepSize: 0.0001
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.right
+            anchors.leftMargin: 15
+
+            Label {
+                id: learningRateSliderLabel
+                anchors.left: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                color: "#273c30"
+                text: parent.value
+                font.family: "Verdana"
+                font.pointSize: 12
+                anchors.topMargin: 10
+            }
+
+            Connections {
+                target: learningRateSelector
+                onMoved: learningRate = learningRateSelector.value
+            }
         }
     }
 
