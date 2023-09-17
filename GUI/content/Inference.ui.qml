@@ -8,7 +8,7 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 */
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Dialogs 1.3
+import QtQuick.Dialogs
 
 Rectangle {
     id: backGround
@@ -35,17 +35,19 @@ Rectangle {
     }
 
     FileDialog {
-        id: fileDialog
-        title: "Select an Image to Upload"
-        nameFilters: ["Images (*.png *.jpg *.jpeg *.bmp *.gif)", "All Files (*)"] // Define allowed image file types
-        onAccepted: {
-            // Handle the selected image file here
-            var selectedImagePath = fileDialog.fileUrl
-            console.log("Selected image: " + selectedImagePath)
-        }
-        onRejected: {
-            console.log("Dialog rejected")
-        }
+        id: imageUpload
+        title: "Select an Image to upload"
+        nameFilters: ["Image (*.png)", "All Files (*)"]
+        var selectedImagePath = "hello"
+        onAccepted: selectedImagePath = FileDialog.fileUrl
+    }
+
+    FileDialog {
+        id: fileUpload
+        title: "Select an Dataset to upload"
+        nameFilters: ["Text Files (*.txt *.csv)", "All Files (*)"]
+        var selectedImagePath = "hello"
+        onAccepted: selectedImagePath = FileDialog.fileUrl
     }
 
     Item {
