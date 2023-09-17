@@ -9,7 +9,7 @@ Item {
     property bool isDone: false;
     property var array: [];
     property int epochs: 5;
-    property int learningRate;
+    property double learningRate: 0.007;
 
     width: 1920
     height: 1080
@@ -54,9 +54,9 @@ Item {
         font.pointSize: 12
         anchors.topMargin: 10
 
-        SpinBox {
+        Slider {
             id: learningRateSelector
-            value: 5
+            value: 0.007
             from: 0.002
             to: 0.01
             stepSize: 0.0001
@@ -64,9 +64,20 @@ Item {
             anchors.left: parent.right
             anchors.leftMargin: 15
 
+            Label {
+                id: learningRateSliderLabel
+                anchors.left: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                color: "#273c30"
+                text: parent.value
+                font.family: "Verdana"
+                font.pointSize: 12
+                anchors.topMargin: 10
+            }
+
             Connections {
                 target: learningRateSelector
-                onValueModified: learningRate = learningRateSelector.value
+                onMoved: learningRate = learningRateSelector.value
             }
         }
     }

@@ -28,6 +28,10 @@ void sendAIConfigurationsSchema(
     const std::string& specificType,
     const std::string& dataSet
     );
+void sendServerCommand(
+    const std::string& command,
+    const std::string& parameters
+    );
 int main();
-
+std::string base64Encode(const std::string &data);
 #endif // SOCKET_CLIENT_H

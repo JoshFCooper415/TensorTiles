@@ -74,8 +74,8 @@ void AppBackend::doStuff(const QString data, const QString model, const QString 
     }
 
     for (const std::vector<double>& row : array2D) {
-        sendMLModelSchema(3, row[0], row[2], true, row[1], 0.001, noEpochs);
+        sendMLModelSchema(3, row[0], row[2], true, row[1], learningRate, noEpochs);
     }
-
-
+    std::cout << learningRate << std::endl;
+    sendServerCommand("train", model.toStdString());
 }
