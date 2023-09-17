@@ -80,7 +80,8 @@ void sendValidJSONToServer(const std::string& validJSONString) {
 void sendMLModelSchema(
     int in_channels, int out_channels, int kernel_size,
     bool use_bn, double dropout_rate,
-    double learning_rate, int num_epochs
+    double learning_rate, int num_epochs,
+    const std::string& data_set  // Add the data_set parameter
 ) {
     std::string schemaType = "MLModel";
     std::string jsonData =
@@ -95,7 +96,8 @@ void sendMLModelSchema(
         "\"hyper_parameters\": {"
         "\"learning_rate\": " + std::to_string(learning_rate) + ","
         "\"num_epochs\": " + std::to_string(num_epochs) +
-        "}"
+        "},"
+        "\"data_set\": \"" + data_set + "\"" +  // Include the data_set field
         "}";
     
     std::string validJSONString =
@@ -106,6 +108,7 @@ void sendMLModelSchema(
     
     sendValidJSONToServer(validJSONString);
 }
+
 
 // Function to create and send a ServerCommand JSON
 void sendServerCommand(

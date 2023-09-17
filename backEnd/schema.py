@@ -4,6 +4,7 @@ from typing import Union,List,Dict
 class MLModel(BaseModel):
     layer_specs: dict
     hyper_parameters: dict
+    data_set: str
 
     @validator("layer_specs")
     def validate_layer_spec(cls, value):
