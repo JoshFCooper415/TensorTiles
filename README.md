@@ -11,3 +11,21 @@ Make sure to pick a datset and model that match!
 #### Step 2:
 Next if you selected Random Forest or Linear Regression you can choose your hyperparamater values.
 ![alt text](https://media.discordapp.net/attachments/1152384475125272616/1152810343609925652/TensorRegression.png?width=883&height=591)![alt text](https://media.discordapp.net/attachments/1152384475125272616/1152810343849013358/TensorRandomForest.png?width=841&height=702)
+
+If instead you selected CNN you can choose values for your hyperparameters and for each block, then drag-and-drop them into place!
+
+[PUT THE CNN IMAGE HERE]
+
+#### Step 3:
+Train you model:
+Just click run!
+
+[PUT THE TRAINING IMAGE HERE]
+
+training can take a while so be patient, your model is training.
+
+#### Step 4:
+Upload an image or enter text to get insight from your model.
+
+#### Step 5:
+Expirement, machine learning requires alot of testing to see what works so don't settle for the first training run!
