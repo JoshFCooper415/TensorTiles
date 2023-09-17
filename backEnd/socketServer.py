@@ -80,9 +80,7 @@ def validate_and_process_data(data):
                     server_running = False
                     response = "Server stopping..."
                 elif parsed_data.command == "start-training":
-                    response = "Training started"
-                    runner.run()
-                    return 
+                    response = runner.run()
                 else:
                     response = "Not a Valid ServerCommand"
 
