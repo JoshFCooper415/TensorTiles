@@ -98,3 +98,26 @@ void AppBackend::doStuff(const QString data, const QString model, const QString 
     sendMLModelSchema(in_channels, out_channels, kernel_sizes, use_bns, dropout_rates, learningRate, noEpochs, dset, (int)array2D.size());
     sendServerCommand("start-training", "{}");
 }
+
+//Regression Name
+//HyperParameters
+//Random Forest or Regression
+//data_set = Paris Boston or Insurance
+
+void AppBackend::sendAIConfigurations(const QString regressionName, const double learningRate, const int depth, const int n_estimators, const QString target, const QStringList droppedFeatures, const QString specificType, const QString dataSet) {
+    // Convert QStrings to string
+    std::string argTypeStr = regresionName.toStdString();
+    std::string targetStr = target.toStdString();
+    std::string specificTypeStr = specificType.toStdString();
+    std::string dataSetStr = dataSet.toStdString();
+
+    // Convert QStringList to std::vector<std::string> for droppedFeatures
+    std::vector<std::string> droppedFeaturesVec;
+    for (const QString& feature : droppedFeatures) {
+        droppedFeaturesVec.push_back(feature.toStdString());
+    }
+
+    // Call sendAIConfigurationsSchema with the converted parameters
+    sendAIConfigurationsSchema(argTypeStr, learningRate, depth, n_estimators, targetStr, droppedFeaturesVec, specificTypeStr, dataSetStr);
+}
+
