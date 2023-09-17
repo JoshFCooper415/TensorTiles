@@ -47,28 +47,37 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.rightMargin: 250
         anchors.leftMargin: 250
-        anchors.bottomMargin: 300
-        anchors.topMargin: 300
+        anchors.bottomMargin: 297
+        anchors.topMargin: 303
         scale: 2
     }
 
+    Image {
+        id: chameleon2
+        x: 590
+        y: 781
+        width: 425
+        height: 394
+        source: "Themed_Chameleon.png"
+    }
+
     Button {
-        id: button
-        x: 1564
-        y: 940
-        width: 175
-        height: 75
-        text: qsTr("Next")
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        font.pixelSize: 25
-        font.family: "Arial"
-        checkable: false
-        anchors.bottomMargin: 25
-        anchors.rightMargin: 25
+        id: selectedModel
+        x: 1726
+        y: 955
+        width: 157
+        height: 88
+        text: qsTr("NEXT")
+        icon.color: "white"
+        font.pixelSize: 45
+
+        background: Rectangle {
+            color: "#89ab9d"
+            radius: 25
+        }
 
         Connections {
-            target: button
+            target: selectedModel
             onClicked: {
                 backend.doStuff(modelSelection.selected,
                                 datasetSelection.selected)

@@ -2,7 +2,7 @@
 #include "socket_client.h"
 #include <sstream>
 
-AppBackend::AppBackend(QObject *parent) :
+AppBackend::AppBackend(QObject* parent) :
     QObject(parent)
 {
 }
@@ -17,7 +17,7 @@ QString AppBackend::test() {
 }
 
 
-void AppBackend::setReady(const bool &ready)
+void AppBackend::setReady(const bool& ready)
 {
     std::cout << ready << std::endl;
     if (ready == m_ready)
@@ -27,7 +27,7 @@ void AppBackend::setReady(const bool &ready)
     emit readyChanged();
 }
 
-void AppBackend::setTest(const QString &test)
+void AppBackend::setTest(const QString& test)
 {
     if (test == m_test)
         return;
@@ -85,16 +85,44 @@ void AppBackend::doStuff(const QString data, const QString model, const QString 
     for (int i = 0; i < array2D.size(); i++) {
         std::vector<double> row = array2D.at(i);
         if (i > 0) {
-            in_channels[i] = out_channels[i-1];
+            in_channels[i] = out_channels[i - 1];
         }
-        if (i < array2D.size()-1) {
+        if (i < array2D.size() - 1) {
             out_channels[i] = row.at(0);
         }
         use_bns[i] = true;
         kernel_sizes[i] = row.at(1);
         dropout_rates[i] = row.at(2);
     }
-    out_channels[array2D.size()-1] = 32;
+    out_channels[array2D.size() - 1] = 32;
     sendMLModelSchema(in_channels, out_channels, kernel_sizes, use_bns, dropout_rates, learningRate, noEpochs, dset, (int)array2D.size());
     sendServerCommand("start-training", "{}");
+}
+
+//Regression Name
+//HyperParameters
+//Random Forest or Regression
+//data_set = Paris Boston or Insurance
+
+void AppBackend::sendAIConfigurations(const QString regressionName, const double learningRate, const int depth, const int n_estimators, const QString target, const QStringList droppedFeatures, const QString specificType, const QString dataSet) {
+    // Convert QStrings to string
+    std::string argTypeStr = regresionName.toStdString();
+    std::string targetStr = target.toStdString();
+    std::string specificTypeStr = specificType.toStdString();
+    std::string dataSetStr = dataSet.toStdString();
+
+    // Convert QStringList to std::vector<std::string> for droppedFeatures
+    std::vector<std::string> droppedFeaturesVec;
+    for (const QString& feature : droppedFeatures) {
+        droppedFeaturesVec.push_back(feature.toStdString());
+    }
+
+    // Call sendAIConfigurationsSchema with the converted parameters
+    sendAIConfigurationsSchema(argTypeStr, learningRate, depth, n_estimators, targetStr, droppedFeaturesVec, specificTypeStr, dataSetStr);
+}
+
+
+
+void AppBackend::runInference(const QString url) {
+    sendImageToServer(url.toStdString().substr(7));
 }

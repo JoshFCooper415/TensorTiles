@@ -110,16 +110,9 @@ Window {
             id: runTab
         }
         // index 5 - Inference
-        Rectangle {
+        Inference {
             id: inferenceTab
-            color: "purple"
-            Button {
-                id: resetButton1
-                x: 487
-                y: 337
-                text: qsTr("Restart")
-                onClicked: stackView.currentIndex = 0
-            }
+            onSelectedImagePathChanged: backend.runInference(inferenceTab.selectedImagePath);
         }
 
         AppBackend {
