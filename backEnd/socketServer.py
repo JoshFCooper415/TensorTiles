@@ -1,11 +1,13 @@
 import socket
 import json
 from pydantic import ValidationError
-from schema import MLModel, TrainingModelConfig, AIConfigurations, ServerCommand, Image, Text
+import schema
+import ModelRunner
+import torch
 
 # Variable to track the server's running state
 server_running = True
-
+runner = ModelRunner.ModelRunner(None)
     
 def receive_variable_length_json(client_socket):
     try:
@@ -37,22 +39,27 @@ def receive_variable_length_json(client_socket):
 def get_expected_schema(data) -> type:
     schema_type = data.get("schemaType")
     if schema_type == "MLModel":
-        return MLModel
+        return schema.MLModel
     elif schema_type == "TrainingModelConfig":
-        return TrainingModelConfig
+        return schema.TrainingModelConfig
     elif schema_type == "AIConfigurations":
-        return AIConfigurations
+        return schema.AIConfigurations
     elif schema_type == "ServerCommand":
-        return ServerCommand
+        return schema.ServerCommand
     elif schema_type == "Image":
-        return Image
+        return schema.Image
     elif schema_type == "Text":
-        return Text
+        return schema.Text
+    elif schema_type == "LoseData":
+        return schema.LossData
+    elif schema_type == schema_type.TrainingData:
+        return schema.TrainingData
     else:
         raise ValueError(f"Received unrecognized schemaType: {schema_type}")
 
 
 def validate_and_process_data(data):
+    global runner
     try:
 
         expected_schema = get_expected_schema(data)
@@ -63,7 +70,27 @@ def validate_and_process_data(data):
             parsed_data = expected_schema.parse_obj(json_data)
             print(f"Received and trusted {expected_schema.__name__} data:")
             print(parsed_data.dict())
-            response = f"Received and trusted {expected_schema.__name__} data\n"
+            if isinstance(parsed_data, schema.MLModel):
+                runner = ModelRunner.ModelRunner(response.hyper_parameters)
+                response = f"Received and trusted {expected_schema.__name__} data\n"
+            elif isinstance(parsed_data, schema.Image):
+                response = runner.inference(schema.Image.data)
+            elif isinstance(parsed_data, schema.ServerCommand):
+                if parsed_data.command == "stopserver":
+                    server_running = False
+                    response = "Server stopping..."
+                elif parsed_data.command == "start-training":
+                    response = runner.run()
+                else:
+                    response = "Not a Valid ServerCommand"
+
+            elif isinstance(parsed_data, schema.TrainingData):
+                response = runner.args['num_epochs']
+            elif isinstance(parsed_data, schema.LossData):
+                runner.model.evaluate_model()
+                response = runner.model.acc_arr
+                
+
         except ValidationError as e:
             print(f"Validation error: {e}")
             response = f"Invalid {expected_schema.__name__} data\n"
