@@ -128,12 +128,13 @@ Rectangle {
 
     Label {
         id: epochsVal
-        x: 396
-        y: 644
-        height: 21
+        x: 466
+        y: 804
+        width: 221
+        height: 48
         color: "#121842"
         text: epochs.value
-        font.pointSize: 14
+        font.pointSize: 20
         font.family: "Verdana"
     }
 
@@ -163,36 +164,37 @@ Rectangle {
 
     Label {
         id: sizeTreesVal
-        x: 1388
-        y: 649
+        x: 1460
+        y: 803
         width: 87
         height: 24
         color: "#121842"
         text: sizeTree.value
-        font.pointSize: 14
+        font.pointSize: 20
         font.family: "Verdana"
     }
 
     Label {
         id: numTreesVal
-        x: 754
-        y: 649
-        height: 21
+        x: 815
+        y: 799
+        width: 55
+        height: 59
         color: "#121842"
         text: numTrees.value
         font.family: "Verdana"
-        font.pointSize: 14
+        font.pointSize: 20
     }
 
     Label {
         id: iterationsVal
-        x: 1095
-        y: 649
+        x: 1137
+        y: 803
         width: 63
         height: 24
         color: "#121842"
         text: iterations.value
         font.family: "Verdana"
-        font.pointSize: 14
+        font.pointSize: 20
     }
 }
