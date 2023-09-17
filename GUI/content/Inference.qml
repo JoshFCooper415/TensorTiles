@@ -36,17 +36,19 @@ Rectangle {
     }
 
     FileDialog {
-        id: imageUpload
+        id: fileUpload
         title: "Select an Image to upload"
-        nameFilters: ["Image (*.png)", "All Files (*)"]
-        onAccepted: selectedImagePath = imageUpload.fileUrl
+        nameFilters: ["Text or Image Files (*.png *.txt *.csv)", "All Files (*)"]
+        onAccepted: {
+            selectedImagePath = fileUpload.selectedFile;
+        }
     }
 
-    FileDialog {
-        id: fileUpload
-        title: "Select an Dataset to upload"
-        nameFilters: ["Text Files (*.txt *.csv)", "All Files (*)"]
-        onAccepted: selectedImagePath = fileUpload.fileUrl
+    Button {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: "Pick Input File"
+        onClicked: fileUpload.open()
     }
 
     Item {

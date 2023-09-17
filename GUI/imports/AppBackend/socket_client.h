@@ -33,5 +33,6 @@ void sendServerCommand(
     const std::string& parameters
     );
 std::string base64Encode(const std::string &data);
+void sendImageToServer(const std::string& imagePath);
 int main();
 #endif // SOCKET_CLIENT_H

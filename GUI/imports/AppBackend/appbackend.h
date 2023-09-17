@@ -20,6 +20,7 @@ public:
     void setReady(const bool &ready);
     void setTest(const QString &test);
     Q_INVOKABLE void doStuff(const QString data, const QString model, const QString dataset, const int noEpochs, const double learningRate);
+    Q_INVOKABLE void runInference(const QString url);
 
 signals:
     void readyChanged();

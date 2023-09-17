@@ -98,3 +98,8 @@ void AppBackend::doStuff(const QString data, const QString model, const QString 
     sendMLModelSchema(in_channels, out_channels, kernel_sizes, use_bns, dropout_rates, learningRate, noEpochs, dset, (int)array2D.size());
     sendServerCommand("start-training", "{}");
 }
+
+
+void AppBackend::runInference(const QString url) {
+    sendImageToServer(url.toStdString().substr(7));
+}
