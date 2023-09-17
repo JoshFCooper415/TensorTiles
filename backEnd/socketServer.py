@@ -102,7 +102,9 @@ def validate_and_process_data(data):
                     response = "[" + ','.join(runner.run()) + "]"
                 else:
                     response = "Not a Valid ServerCommand"
-
+            elif isinstance(parsed_data, schema.AIConfigurations):
+                runner = ModelRunner.ModelRunner(parsed_data.args)
+                response = f"Received and trusted {expected_schema.__name__} data\n"
             elif isinstance(parsed_data, schema.TrainingData):
                 response = runner.args['num_epochs']
             elif isinstance(parsed_data, schema.LossData):
