@@ -104,9 +104,9 @@ void AppBackend::doStuff(const QString data, const QString model, const QString 
 //Random Forest or Regression
 //data_set = Paris Boston or Insurance
 
-void AppBackend::sendAIConfigurations(const QString regressionName, const double learningRate, const int depth, const int n_estimators, const QString target, const QStringList droppedFeatures, const QString specificType, const QString dataSet) {
+void AppBackend::sendAIConfigurations(const double learningRate, const int depth, const int n_estimators, const QString target, const QStringList droppedFeatures, const QString specificType, const QString dataSet) {
     // Convert QStrings to string
-    std::string argTypeStr = regresionName.toStdString();
+    std::string argTypeStr = "Regression";
     std::string targetStr = target.toStdString();
     std::string specificTypeStr = specificType.toStdString();
     std::string dataSetStr = dataSet.toStdString();

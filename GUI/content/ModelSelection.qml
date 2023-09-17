@@ -43,7 +43,6 @@ Grid {
         text: qsTr("Random Forest")
         anchors.top: cnnSelected.bottom
         anchors.topMargin: 80
-        anchors.topMargin: 80
 
         Connections {
             target: randomForestSelected

@@ -85,6 +85,9 @@ Window {
         // index 1 - Random Forest
         RandomForest {
             id: randomForest
+
+            onIsDoneChanged: backend.sendAIConfigurations(0.002, randomForest.depth, randomForest.estimators, "hasPool", "", "random forest", "paris")
+
         }
         //index 2 - CNN
         DragNDropCNN {
@@ -96,7 +99,6 @@ Window {
                 target: convNet
                 onIsDoneChanged: {
                     backend.doStuff(convNet.array.join(";"), chooseModelTab.model, chooseModelTab.dataset, convNet.epochs, convNet.learningRate)
-//                    console.log(convNet.array.join(";"))
                     stackView.currentIndex = 4
                 }
             }
