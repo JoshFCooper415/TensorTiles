@@ -25,10 +25,10 @@ Item {
     
     Image {
         id: cnnTitle
-        x: 100
-        y: 100
-        width: 406
-        height: 182
+        x: 3
+        y: 77
+        width: 299
+        height: 190
         source: "CNNTitle.png"
     }
 
@@ -50,7 +50,7 @@ Item {
         color: "#273c30"
         text: qsTr("Number of Epochs: ")
         font.family: "Verdana"
-        font.pointSize: 12
+        font.pointSize: 15
         anchors.topMargin: 10
 
         SpinBox {
@@ -78,7 +78,7 @@ Item {
         color: "#273c30"
         text: qsTr("Learning Rate: ")
         font.family: "Verdana"
-        font.pointSize: 12
+        font.pointSize: 15
         anchors.topMargin: 10
 
         Slider {
@@ -98,7 +98,7 @@ Item {
                 color: "#273c30"
                 text: parent.value
                 font.family: "Verdana"
-                font.pointSize: 12
+                font.pointSize: 15
                 anchors.topMargin: 10
             }
 
@@ -111,7 +111,7 @@ Item {
 
     Rectangle {
         id: dropContainer
-        color: "blue"
+        color: "transparent"
         width: 350
         height: 300
         x: 0
@@ -141,6 +141,8 @@ Item {
                 anchors.fill: parent
 
                 color: dragTarget.containsDrag ? "grey" : colorKey
+
+                opacity: 0.0
             }
         }
     }
@@ -151,7 +153,7 @@ Item {
         anchors.bottom: parent.bottom
         width: root.width/3
         height: root.height/5
-        color: "green"
+        color: "transparent"
 
         MouseArea {
             id: startBlockMouseArea
@@ -166,13 +168,15 @@ Item {
 
             Rectangle {
                 id: startBlock
-
                 width: 200
                 height: 150
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
                 }
+
+                color: "transparent"
+
 
                 property int rectX: 0
                 property int rectY: -200
@@ -195,7 +199,7 @@ Item {
 //                    }
 //                }
 
-                color: root.colorKey
+                //color: root.colorKey
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: startBlockMouseArea.drag.active
@@ -313,7 +317,7 @@ Item {
         anchors.bottom: parent.bottom
         width: root.width/3
         height: root.height/5
-        color: "red"
+        color: "transparent"
 
         DropArea {
             id: homeForLeftPiece
@@ -369,7 +373,7 @@ Item {
 //                    }
 //                }
 
-                color: root.colorKey
+                color: "transparent"
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea1.drag.active
@@ -521,7 +525,7 @@ Item {
 //                    }
 //                }
 
-                color: root.colorKey
+                color: "transparent"
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea2.drag.active
@@ -673,7 +677,7 @@ Item {
 //                    }
 //                }
 
-                color: root.colorKey
+                color: "transparent"
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea3.drag.active
@@ -825,7 +829,7 @@ Item {
 //                    }
 //                }
 
-                color: root.colorKey
+                color: "transparent"
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: middleBlockArea4.drag.active
@@ -951,7 +955,7 @@ Item {
 
                 width: 200
                 height: 150
-                color: "#aa55ff"
+                color: "transparent"
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -1095,7 +1099,7 @@ Item {
         anchors.bottom: parent.bottom
         width: root.width/3
         height: root.height/5
-        color: "blue"
+        color: "transparent"
 
         DropArea {
             id: homeForRightPiece
@@ -1150,7 +1154,7 @@ Item {
 //                    }
 //                }
 
-                color: root.colorKey
+                color: "transparent"
 
                 Drag.keys: [ root.colorKey ]
                 Drag.active: mouseArea3.drag.active
@@ -1236,7 +1240,7 @@ Item {
         anchors.bottomMargin: 15
 
         background: Rectangle {
-            color: "darkgreen"
+            color: "#d2b46b"
             radius: 25
         }
 

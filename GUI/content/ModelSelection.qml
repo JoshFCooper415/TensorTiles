@@ -42,7 +42,7 @@ Grid {
         height: 50
         text: qsTr("Random Forest")
         anchors.top: cnnSelected.bottom
-        anchors.topMargin: 10
+        anchors.topMargin: 80
 
         Connections {
             target: randomForestSelected
@@ -54,9 +54,9 @@ Grid {
         id: transformerSelected
         width: 450
         height: 50
-        text: qsTr("Transformer")
+        text: qsTr("Regression")
         anchors.top: randomForestSelected.bottom
-        anchors.topMargin: 10
+        anchors.topMargin: 80
 
         Connections {
             target: transformerSelected
@@ -64,31 +64,5 @@ Grid {
         }
     }
 
-    RadioButton {
-        id: regressionSelected
-        width: 450
-        height: 50
-        text: qsTr("Regression")
-        anchors.top: transformerSelected.bottom
-        anchors.topMargin: 10
 
-        Connections {
-            target: regressionSelected
-            onClicked: selected = "regression"
-        }
-    }
-
-    RadioButton {
-        id: ffnnSelected
-        width: 450
-        height: 50
-        text: qsTr("Feed Forward Neural Network (FFNN)")
-        anchors.top: regressionSelected.bottom
-        anchors.topMargin: 10
-
-        Connections {
-            target: ffnnSelected
-            onClicked: selected = "ffnn"
-        }
-    }
 }
