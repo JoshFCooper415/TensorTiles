@@ -40,13 +40,13 @@ Grid {
         id: handwrittenShapesSelected
         width: 450
         height: 50
-        text: qsTr("Handwritten Shapes")
+        text: qsTr("Clothing Pictures")
         anchors.top: handwrittenNumbersSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: handwrittenShapesSelected
-            onClicked: selected = "handShapes"
+            onClicked: selected = "clothing"
         }
     }
 
@@ -54,13 +54,13 @@ Grid {
         id: crayonColorsSelected
         width: 450
         height: 50
-        text: qsTr("Crayon Colors")
+        text: qsTr("Basic Images")
         anchors.top: handwrittenShapesSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: crayonColorsSelected
-            onClicked: selected = "crayon"
+            onClicked: selected = "basic"
         }
     }
 
@@ -68,13 +68,13 @@ Grid {
         id: realEstateSelected
         width: 450
         height: 50
-        text: qsTr("Real Estate")
+        text: qsTr("Boston Real Estate")
         anchors.top: crayonColorsSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: realEstateSelected
-            onClicked: selected = "realEstate"
+            onClicked: selected = "brealEstate"
         }
     }
 
@@ -82,13 +82,13 @@ Grid {
         id: financeSelected
         width: 450
         height: 50
-        text: qsTr("Finance")
+        text: qsTr("Paris Real Estate")
         anchors.top: realEstateSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: financeSelected
-            onClicked: selected = "finance"
+            onClicked: selected = "prealestate"
         }
     }
 
@@ -96,13 +96,13 @@ Grid {
         id: spectographSelected
         width: 450
         height: 50
-        text: qsTr("Spectograph")
+        text: qsTr("Insurance")
         anchors.top: financeSelected.bottom
         anchors.topMargin: 10
 
         Connections {
             target: spectographSelected
-            onClicked: selected = "spectograph"
+            onClicked: selected = "insurance"
         }
     }
 

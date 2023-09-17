@@ -8,8 +8,8 @@ Rectangle {
     width: Constants.width
     height: Constants.height
     property bool pressed: false
-    property string model: "";
-    property string dataset: "";
+    property string model: ""
+    property string dataset: ""
 
     ModelDatasetSelectionBackend {
         id: backend
@@ -70,11 +70,11 @@ Rectangle {
         Connections {
             target: button
             onClicked: {
-                backend.doStuff(modelSelection.selected, datasetSelection.selected)
+                backend.doStuff(modelSelection.selected,
+                                datasetSelection.selected)
                 model = modelSelection.selected
                 dataset = datasetSelection.selected
             }
         }
-
     }
 }
