@@ -48,13 +48,13 @@ Window {
         x: 331
         y: -4
         text: qsTr("Run Model")
-        onClicked: stackView.currentIndex = 2
+        onClicked: stackView.currentIndex = 4
     }
     TabButton {
         x: 478
         y: -4
         text: qsTr("Run Inference")
-        onClicked: stackView.currentIndex = 4
+        onClicked: stackView.currentIndex = 5
     }
 
     StackLayout {
@@ -106,9 +106,8 @@ Window {
             id: regression
         }
 
-        Rectangle {
+        RunScreen {
             id: runTab
-            color: "orange"
         }
         // index 5 - Inference
         Rectangle {
@@ -125,6 +124,11 @@ Window {
 
         AppBackend {
             id: backend
+        }
+
+        Connections {
+            target: backend
+            onReadyChanged: runTab.done = backend.ready;
         }
     }
 }

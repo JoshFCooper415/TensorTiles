@@ -80,7 +80,8 @@ void sendValidJSONToServer(const std::string& validJSONString) {
 void sendMLModelSchema(
     int in_channels, int out_channels, int kernel_size,
     bool use_bn, double dropout_rate,
-    double learning_rate, int num_epochs
+    double learning_rate, int num_epochs,
+    const std::string& data_set  // Add the data_set parameter
 ) {
     std::string schemaType = "MLModel";
     std::string jsonData =
@@ -95,7 +96,8 @@ void sendMLModelSchema(
         "\"hyper_parameters\": {"
         "\"learning_rate\": " + std::to_string(learning_rate) + ","
         "\"num_epochs\": " + std::to_string(num_epochs) +
-        "}"
+//        "},"
+//        "\"data_set\": \"" + data_set + "\"" +  // Include the data_set field
         "}";
     
     std::string validJSONString =
@@ -106,6 +108,7 @@ void sendMLModelSchema(
     
     sendValidJSONToServer(validJSONString);
 }
+
 
 // Function to create and send a ServerCommand JSON
 void sendServerCommand(
@@ -268,12 +271,90 @@ void sendTextSchema(const std::string& textData) {
     sendValidJSONToServer(jsonData);
 }
 
-int main() {
-    // Call the functions to send different schema types to the server
-    sendMLModelSchema(64, 128, 3, true, 0.2, 0.001, 100);
-    std::vector<std::string> droppedFeatures = {"feature1", "feature2"};
-    sendAIConfigurationsSchema("Regression", 0.001, 10, 100, "output", droppedFeatures, "random forest", "data set");
-    sendServerCommand("train_ml_model", "{\"model_type\": \"CNN\", \"epochs\": 10, \"learning_rate\": 0.001}");
+// Function to receive LossData: Send the Schema anyways it doesnt do anything
+int sendLossDataSchema(const std::vector<double>& lossData) {
+    std::string schemaType = "LossData";
 
+    std::stringstream lossJson;
+    lossJson << "{";
+    lossJson << "\"data\": [";
+    for (size_t i = 0; i < lossData.size(); ++i) {
+        lossJson << lossData[i];
+        if (i < lossData.size() - 1) {
+            lossJson << ",";
+        }
+    }
+    lossJson << "]";
+    lossJson << "}";
+
+    std::string validJSONString =
+        "{"
+        "\"schemaType\": \"" + schemaType + "\","
+        "\"JSON_data\": " + lossJson.str() +
+        "}";
+
+    sendValidJSONToServer(validJSONString);
+
+    // Receive and store the integer response from LossData
+    std::string response = receiveServerResponse();
+    int lossResponse = std::stoi(response);
+    return lossResponse;
+}
+
+// Function to receive TrainingData (List or Dict)
+// NEED TO CALL SERVERCOMMAND WITH START TRAINING
+std::vector<double> startTrainingGetData(int numberOfEpochs) {
+    std::string schemaType = "TrainingData";
+    std::string jsonData =
+        "{"
+        "\"numberOfEpochs\": " + std::to_string(numberOfEpochs) +
+        "}";
+
+    std::string validJSONString =
+        "{"
+        "\"schemaType\": \"" + schemaType + "\","
+        "\"JSON_data\": " + jsonData +
+        "}";
+
+    sendValidJSONToServer(validJSONString);
+
+    // Receive and store the vector response from TrainingData
+    std::string response = receiveServerResponse();
+    std::vector<double> trainingResponse;
+
+    // Parse the received response (assumes it's a JSON array of numbers)
+    std::istringstream iss(response);
+    double value;
+    while (iss >> value) {
+        trainingResponse.push_back(value);
+        if (iss.peek() == ',') {
+            iss.ignore();
+        }
+    }
+
+    return trainingResponse;
+}
+
+
+// Function to send text data
+void sendTextData(const std::string& textData) {
+    std::string schemaType = "Text";
+    
+    std::string jsonData =
+        "{"
+        "\"text\": \"" + textData + "\""
+        "}";
+    
+    std::string validJSONString =
+        "{"
+        "\"schemaType\": \"" + schemaType + "\","
+        "\"JSON_data\": " + jsonData +
+        "}";
+    
+    sendValidJSONToServer(validJSONString);
+}
+
+
+int main() {
     return 0;
 }

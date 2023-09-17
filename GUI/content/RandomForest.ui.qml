@@ -18,16 +18,12 @@ Rectangle {
     color: Constants.backgroundColor
 
     Image {
-        id: image
-        x: 357
-        y: 52
-        width: 1361
-        height: 1028
-        anchors.bottom: parent.bottom
-        source: "../asset_imports/randomForestBackground.png"
-        anchors.bottomMargin: 0
-        opacity: 0.5
-        fillMode: Image.PreserveAspectFit
+        id: randForTitle
+        x: 542
+        y: -172
+        width: 936
+        height: 662
+        source: "Title.png"
     }
 
     Rectangle {
@@ -35,16 +31,70 @@ Rectangle {
         width: 928
         height: 419
         x: 574
-        y: 347
+        y: 442
         color: "lightgrey"
         opacity: 0.8
         radius: 40
     }
 
+    Image {
+        id: forestPic1
+        x: 744
+        y: 166
+        width: 574
+        height: 337
+        source: "randForestTitle.png"
+    }
+
+    Image {
+        id: forestPic2
+        x: 681
+        y: 423
+        width: 320
+        height: 203
+        source: "numTrees.png"
+    }
+
+    Image {
+        id: forestPic3
+        x: 1042
+        y: 423
+        width: 339
+        height: 213
+        source: "sizeTrees.png"
+    }
+
+    Image {
+        id: chameleon1
+        x: 316
+        y: 705
+        width: 425
+        height: 394
+        source: "Themed_Chameleon.png"
+    }
+
+    Button {
+        id: nextForest
+        x: 924
+        y: 904
+        width: 157
+        height: 88
+        text: qsTr("NEXT")
+        icon.color: "white"
+        font.pixelSize: 35
+
+        background: Rectangle {
+            color: "#89ab9d"
+            radius: 25
+        }
+
+        onClicked: isDone = true
+    }
+
     Slider {
         id: sizeTree
-        x: 1194
-        y: 485
+        x: 1182
+        y: 587
         stepSize: 1
         to: 16
         from: 1
@@ -56,7 +106,7 @@ Rectangle {
     Slider {
         id: numTrees
         x: 810
-        y: 485
+        y: 587
         orientation: Qt.Vertical
         value: 100
         stepSize: 1
@@ -68,7 +118,7 @@ Rectangle {
     Label {
         id: numTreesVal
         x: 728
-        y: 530
+        y: 622
         width: 30
         height: 21
         color: "black"
@@ -78,41 +128,14 @@ Rectangle {
     }
 
     Label {
-        id: numTreesTitle
-        x: 691
-        y: 423
-        text: qsTr("Number of Trees")
-        font.family: "Verdana"
-        font.pointSize: 25
-    }
-
-    Label {
-        id: sizeTreesTitle
-        x: 1094
-        y: 423
-        text: qsTr("Size of Trees")
-        font.pointSize: 25
-        font.family: "Verdana"
-    }
-
-    Label {
         id: sizeTreesVal
-        x: 1138
-        y: 520
+        x: 1132
+        y: 622
+        width: 20
+        height: 34
         color: "#121842"
         text: sizeTree.value
         font.pointSize: 14
         font.family: "Verdana"
-    }
-
-    Label {
-        id: title
-        x: 772
-        y: 221
-        color: "#273c30"
-        text: qsTr("Random Forest")
-        font.family: "Verdana"
-        font.styleName: "Bold"
-        font.pointSize: 35
     }
 }

@@ -1,4 +1,5 @@
 #include "appbackend.h"
+#include "socket_client.h"
 #include <sstream>
 
 AppBackend::AppBackend(QObject *parent) :
@@ -36,6 +37,7 @@ void AppBackend::setTest(const QString &test)
 }
 
 void AppBackend::doStuff(const QString data, const QString model, const QString dataset, const int noEpochs, const double learningRate) {
+    setReady(false);
     std::string input = data.toStdString();
 
     // Initialize a vector of vectors to store the 2D array.
@@ -73,9 +75,10 @@ void AppBackend::doStuff(const QString data, const QString model, const QString 
         std::cout << '\n';
     }
 
+    std::string dset = dataset.toStdString();
+
     for (const std::vector<double>& row : array2D) {
-        sendMLModelSchema(3, row[0], row[2], true, row[1], learningRate, noEpochs);
+        sendMLModelSchema(3, row[0], row[2], true, row[1], learningRate, noEpochs, dset);
     }
-    std::cout << learningRate << std::endl;
     sendServerCommand("train", model.toStdString());
 }
