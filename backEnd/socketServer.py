@@ -1,7 +1,7 @@
 import socket
 import json
 from pydantic import ValidationError
-from schema import MLModel, TrainingModelConfig, AIConfigurations, ServerCommand, Image
+from schema import MLModel, TrainingModelConfig, AIConfigurations, ServerCommand, Image, Text
 
 # Variable to track the server's running state
 server_running = True
@@ -46,6 +46,8 @@ def get_expected_schema(data) -> type:
         return ServerCommand
     elif schema_type == "Image":
         return Image
+    elif schema_type == "Text":
+        return Text
     else:
         raise ValueError(f"Received unrecognized schemaType: {schema_type}")
 
