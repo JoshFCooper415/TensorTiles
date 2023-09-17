@@ -6,7 +6,6 @@ from ConvNet import ConvNetLayers
 from CIFAR10DataLoader import CIFAR10DataLoader
 from MNISTDataLoader import MNISTDataLoader
 from FasionMNISTDataLoader import FashionMNISTDataLoader
-from STLDataLoader import STLDataLoader
 
 class CNNTrainer:
     def __init__(self, layer_specs, hyper_parameters, dataset):

@@ -9,7 +9,7 @@ class ModelRunner:
     def __init__(self, args):
         self.args = args
         if args == None:
-            return self
+            return None
 
     def run(self):
         if self.args[0] == "Regression":
@@ -61,7 +61,7 @@ class ModelRunner:
         self.model = CNNTrainer(args[1], args[2], args[3])
         self.model.train()
         return self.model.acc_arr
-    def inferance(self, runner, input_image):
+    def inferance(self, input_image):
         preprocess = transforms.Compose([
             transforms.Resize(256),
             transforms.CenterCrop(224),
@@ -74,10 +74,11 @@ class ModelRunner:
         input_batch = input_tensor.unsqueeze(0)
         # Run the model
         with torch.no_grad():  # Deactivates autograd, reduces memory usage and speeds up computations
-            output = runner.model.model(input_batch)
+            output = self.model.model(input_batch)
 
         _, predicted_class = torch.max(output, 1)
         print(f"Predicted class: {predicted_class.item()}")
+        return predicted_class.item()
 
 if __name__ == '__main__':
     #args = ["Regression",{'learning_rate': 0.00001,'depth': 10,'n_estimators': 100,'target': 'hasStorageRoom', 'dropedFeatures': []},'random forest','paris']
