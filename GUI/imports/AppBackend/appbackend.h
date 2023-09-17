@@ -5,8 +5,6 @@
 #include <QString>
 #include <qqml.h>
 
-#include "socket_client.h"
-
 class AppBackend : public QObject
 {
     Q_OBJECT

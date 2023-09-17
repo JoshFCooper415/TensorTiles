@@ -356,11 +356,5 @@ void sendTextData(const std::string& textData) {
 
 
 int main() {
-    // Call the functions to send different schema types to the server
-    sendMLModelSchema(64, 128, 3, true, 0.2, 0.001, 100);
-    std::vector<std::string> droppedFeatures = {"feature1", "feature2"};
-    sendAIConfigurationsSchema("Regression", 0.001, 10, 100, "output", droppedFeatures, "random forest", "data set");
-    sendServerCommand("train_ml_model", "{\"model_type\": \"CNN\", \"epochs\": 10, \"learning_rate\": 0.001}");
-
     return 0;
 }

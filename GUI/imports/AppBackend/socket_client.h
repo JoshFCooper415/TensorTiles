@@ -19,8 +19,7 @@ void sendValidJSONToServer(const std::string& validJSONString);
 void sendMLModelSchema(
     int in_channels, int out_channels, int kernel_size,
     bool use_bn, double dropout_rate,
-    double learning_rate, int num_epochs
-    );
+    double learning_rate, int num_epochs, std::string& data_set);
 void sendAIConfigurationsSchema(
     const std::string& argType,
     double learning_rate, int depth, int n_estimators,
